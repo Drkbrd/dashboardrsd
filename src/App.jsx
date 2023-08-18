@@ -2,9 +2,12 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { db, initializeFirebase } from './data/firebase_config.jsx'
+import { create } from './data/create'
 
 function App() {
   const [count, setCount] = useState(1)
+  initializeFirebase()
 
   return (
     <>
@@ -18,7 +21,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count * 3)}>
+        <button onClick={() => create(db())}>
           count is {count}
         </button>
         <p>
