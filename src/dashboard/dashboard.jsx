@@ -1,16 +1,17 @@
 import { useState } from 'react'
+import './style.css'
 
 const listTeams = [
-    { "name": "Equipo 8", "score": 8 },
-    { "name": "Equipo 4", "score": 4 },
-    { "name": "Equipo 1", "score": 1 },
-    { "name": "Equipo 5", "score": 5 },
-    { "name": "Equipo 7", "score": 7 },
-    { "name": "Equipo 3", "score": 3 },
-    { "name": "Equipo 10", "score": 10 },
-    { "name": "Equipo 6", "score": 6 },
-    { "name": "Equipo 9", "score": 9 },
-    { "name": "Equipo 2", "score": 2 }
+    { "name": "Equipo 8", "score": 8, "clr": "#239B56" },
+    { "name": "Equipo 4", "score": 4, "clr": "#A6ACAF" },
+    { "name": "Equipo 1", "score": 1, "clr": "#A6BCAF" },
+    { "name": "Equipo 5", "score": 5, "clr": "#A6AHAF" },
+    { "name": "Equipo 7", "score": 7, "clr": "#A6A9AF" },
+    { "name": "Equipo 3", "score": 3, "clr": "#A6AZAF" },
+    { "name": "Equipo 10", "score": 10, "clr": "#A8ACAF" },
+    { "name": "Equipo 6", "score": 6, "clr": "#A6A6AF" },
+    { "name": "Equipo 9", "score": 9, "clr": "#A6AEAF" },
+    { "name": "Equipo 2", "score": 2, "clr": "#A6ARAF" }
 ]
 
 const sortList = listTeams.sort((a, b) => a.score - b.score)
@@ -21,22 +22,14 @@ function Dashboard() {
         <>
             <h1>Dashboard</h1>
             <p>Here you  will see the podioum of your Brotherhood</p>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sortList.map((team, index) => (
-                        <tr key={index}>
-                            <td>{team.name}</td>
-                            <td>{team.score}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <div class="container text-center">
+                {sortList.map((team, index) => (
+                    <div key={index} class="row" style={{ backgroundColor: team.clr }}>
+                        <div class="col">{team.name}</div>
+                        <div class="col">{team.score}</div>
+                    </div>
+                ))}
+            </div>
 
         </>
     )
