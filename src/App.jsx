@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { db, initializeFirebase } from './data/firebase_config.jsx'
-import { create } from './data/create'
+import { create } from './dashboard/create'
 
 function App() {
   const [count, setCount] = useState(1)

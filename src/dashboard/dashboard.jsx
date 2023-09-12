@@ -14,7 +14,9 @@ const listTeams = [
     { "name": "Equipo 10", "score": 10, "clr": "#1ABC9C" },
     { "name": "Equipo 6", "score": 6, "clr": "#D4AC0D" },
     { "name": "Equipo 9", "score": 9, "clr": "#F5B041" },
-    { "name": "Equipo 2", "score": 2, "clr": "#D35400" }
+    { "name": "Equipo 2", "score": 2, "clr": "#D35400" },
+    { "name": "Equipo 11", "score": 11, "clr": "#D95400" },
+    { "name": "Equipo 12", "score": 12, "clr": "#D54400" }
 ]
 
 const sortList = listTeams.sort((a, b) => a.score - b.score)
