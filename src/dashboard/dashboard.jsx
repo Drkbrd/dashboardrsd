@@ -3,6 +3,12 @@ import './style.css'
 import { db, initializeFirebase } from './firebase_config.jsx'
 import { create } from './create.jsx'
 
+const teamsRef = db.collection('team');
+const allTeams = await db.collectionGroup('team').get();
+allTeams.forEach((doc) => {
+    console.log("doc.id, ' => ', doc.data()");
+    console.log(doc.id, ' => ', doc.data());
+});
 
 const listTeams = [
     { "name": "Equipo 8", "score": 8, "clr": "#C0392B" },
@@ -26,9 +32,9 @@ function Dashboard() {
     initializeFirebase()
     return (
         <>
-            <div class="p-3 mb-2 bg-secondary-subtle text-emphasis-secondary">
-                <h1>Dashboard</h1>
-                <p>Here you  will see the podioum of your Brotherhood</p>
+            <div class="p-3 mb-2 bg-dark text-white; fullBody">
+                <h1 class="textStyle">Dashboard</h1>
+                <p class="textStyle2">Here you  will see the podioum of your Brotherhood</p>
                 <div className="container text-center">
                     {sortList.map((team, index) => (
                         <div key={index} className="row" style={{ backgroundColor: team.clr }}>
@@ -38,22 +44,21 @@ function Dashboard() {
                     ))}
                 </div>
                 <div></div>
-                <h2>Bottons to edit the BD</h2>
-                <p>Here you will control de DataBase</p>
+                <h2 class="textStyle2">Bottons to edit the BD</h2>
+                <p class="textStyle2">Here you will control de DataBase</p>
                 <div class="container-fluid">
                     <div className="row">
-                        {/*<div class="col"> Botton add*
-                        <button onClick={() => create(db())}>
-                            Add item
-                </button>
-                </div>*/}
+                        <div class="col"> Botton add*
+                            <button onClick={() => create(db())}>
+                                Add item
+                            </button>
+                        </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end"> {/*Ingresar*/}
                             <button class="btn btn-primary me-md-2" type="button">Logg in</button>
                         </div>
                     </div>
                 </div >
             </div>
-
         </>
     )
 }
