@@ -1,5 +1,4 @@
 import { collection, addDoc } from "firebase/firestore";
-
 import 'firebase/database';
 
 export async function create(db) {

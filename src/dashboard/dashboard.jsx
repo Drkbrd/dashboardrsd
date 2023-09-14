@@ -1,14 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './style.css'
-import { db, initializeFirebase } from './firebase_config.jsx'
+import { db, app } from '../firebase/firebase_config.jsx'
 import { create } from './create.jsx'
+import { getAllTeams, getAsyncTeams } from '../firebase/teams_repository'
 
-const teamsRef = db.collection('team');
-const allTeams = await db.collectionGroup('team').get();
-allTeams.forEach((doc) => {
-    console.log("doc.id, ' => ', doc.data()");
-    console.log(doc.id, ' => ', doc.data());
-});
 
 const listTeams = [
     { "name": "Equipo 8", "score": 8, "clr": "#C0392B" },
@@ -29,15 +24,17 @@ const sortList = listTeams.sort((a, b) => a.score - b.score)
 
 function Dashboard() {
     const [count, setCount] = useState(1)
-    initializeFirebase()
+    const [teams, setTeams] = useState([])
+    //getAllTeams()
+    useEffect(() => { getAsyncTeams(setTeams) }, [])
     return (
         <>
             <div class="p-3 mb-2 bg-dark text-white; fullBody">
                 <h1 class="textStyle">Dashboard</h1>
                 <p class="textStyle2">Here you  will see the podioum of your Brotherhood</p>
                 <div className="container text-center">
-                    {sortList.map((team, index) => (
-                        <div key={index} className="row" style={{ backgroundColor: team.clr }}>
+                    {teams.sort((a, b) => b.score - a.score).map((team) => (
+                        <div key={team.id} className="row" style={{ backgroundColor: team.color }}>
                             <div class="col">{team.name}</div>
                             <div class="col">{team.score}</div>
                         </div>
@@ -48,8 +45,8 @@ function Dashboard() {
                 <p class="textStyle2">Here you will control de DataBase</p>
                 <div class="container-fluid">
                     <div className="row">
-                        <div class="col"> Botton add*
-                            <button onClick={() => create(db())}>
+                        <div class="col"> {/*Botton add*/}
+                            <button onClick={() => getAllTeams()}>
                                 Add item
                             </button>
                         </div>
@@ -58,7 +55,7 @@ function Dashboard() {
                         </div>
                     </div>
                 </div >
-            </div>
+            </div >
         </>
     )
 }
