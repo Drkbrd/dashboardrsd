@@ -15,7 +15,7 @@ export async function getAllTeams(setTeams) {
 }
 
 export async function getAsyncTeams(setTeams) {
-    const q = query(collection(db, "team"));
+    const q = await query(collection(db, "team"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const newData = querySnapshot.docs
             .map((doc) => ({ ...doc.data(), id: doc.id }));

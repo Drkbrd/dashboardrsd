@@ -4,7 +4,7 @@ import { db, app } from '../firebase/firebase_config.jsx'
 import { create } from './create.jsx'
 import { getAllTeams, getAsyncTeams } from '../firebase/teams_repository'
 
-
+/*
 const listTeams = [
     { "name": "Equipo 8", "score": 8, "clr": "#C0392B" },
     { "name": "Equipo 4", "score": 4, "clr": "#F1948A" },
@@ -20,7 +20,7 @@ const listTeams = [
     { "name": "Equipo 12", "score": 12, "clr": "#D54400" }
 ]
 
-const sortList = listTeams.sort((a, b) => a.score - b.score)
+const sortList = listTeams.sort((a, b) => a.score - b.score)*/
 
 function Dashboard() {
     const [count, setCount] = useState(1)
