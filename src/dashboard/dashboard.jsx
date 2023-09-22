@@ -29,29 +29,29 @@ function Dashboard() {
     useEffect(() => { getAsyncTeams(setTeams) }, [])
     return (
         <>
-            <div class="p-3 mb-2 bg-dark text-white; fullBody">
-                <h1 class="textStyle">Dashboard</h1>
-                <p class="textStyle2">Here you  will see the podioum of your Brotherhood</p>
+            <div className="p-3 mb-2 bg-dark text-white; fullBody">
+                <h1 className="textStyle">Dashboard</h1>
+                <p className="textStyle2">Here you  will see the podioum of your Brotherhood</p>
                 <div className="container text-center">
                     {teams.sort((a, b) => b.score - a.score).map((team) => (
                         <div key={team.id} className="row" style={{ backgroundColor: team.color }}>
-                            <div class="col">{team.name}</div>
-                            <div class="col">{team.score}</div>
+                            <div className="col">{team.name}</div>
+                            <div className="col">{team.score}</div>
                         </div>
                     ))}
                 </div>
                 <div></div>
-                <h2 class="textStyle2">Bottons to edit the BD</h2>
-                <p class="textStyle2">Here you will control de DataBase</p>
-                <div class="container-fluid">
+                <h2 className="textStyle2">Bottons to edit the BD</h2>
+                <p className="textStyle2">Here you will control de DataBase</p>
+                <div className="container-fluid">
                     <div className="row">
-                        <div class="col"> {/*Botton add*/}
+                        <div className="col"> {/*Botton add*/}
                             <button onClick={() => getAllTeams()}>
                                 Add item
                             </button>
                         </div>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end"> {/*Ingresar*/}
-                            <button class="btn btn-primary me-md-2" type="button">Logg in</button>
+                        <div className="d-grid gap-2 d-md-flex justify-content-md-end"> {/*Ingresar*/}
+                            <button className="btn btn-primary me-md-2" type="button">Logg in</button>
                         </div>
                     </div>
                 </div >

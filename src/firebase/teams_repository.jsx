@@ -36,3 +36,19 @@ export async function asignPoints(fkst, fkteam, timestam, totScore) {
         console.error("Error adding document: ", e);
     }
 }
+
+export async function createTeam(amnt, chnt, clr, crtAt, nm, scr) {
+    try {
+        const docRef = await addDoc(collection(db, "team"), {
+            amount: amnt,
+            chant: chnt,
+            color: clr,
+            create_at: crtAt,
+            name: nm,
+            score: scr
+        });
+        console.log("Team written with ID: ", docRef.id);
+    } catch (e) {
+        console.error("Error adding team: ", e);
+    }
+}

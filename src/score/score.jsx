@@ -20,6 +20,7 @@ function Score() {
         const formData = new FormData(form);
         // O puedes trabajarlo como un objeto plano:
         const formJson = Object.fromEntries(formData.entries());
+        e(selectedOption.currentTarget.value);
         console.log(formJson);
 
     }
@@ -31,8 +32,8 @@ function Score() {
     const chantInputId = useId();
     const challengeInputId = useId();
     const [sendFkSttScor, setFkSttScor] = useState(0); //sendScore nombre variable - setScore nopmbre funcion - actualizador useState es funcioninterna predefinida
-    const [sendIdTeam, setIdTeam] = useState(0);
-    const [sendDate, setDate] = useState(0);
+    const [plcHldr1, setplcHldr1] = useState("Chant score");
+    const [plcHldr2, setplcHldr2] = useState("Challenge score");
     const [sendScoreChn, setScoreChn] = useState(0);
     const [sendScoreCha, setScoreCha] = useState(0);
     var totalScore = parseInt(sendScoreChn) + parseInt(sendScoreCha)
@@ -43,7 +44,7 @@ function Score() {
     };
 
     useEffect(() => { getAsyncTeams(setTeams) }, [])
-    useEffect(() => { asignPoints(sendFkSttScor, sendIdTeam, sendDate, totalScore) }, [])
+    //useEffect(() => { asignPoints(sendFkSttScor, sendIdTeam, sendDate, totalScore) }, [])
     return (
         <>
             <form onSubmit={handleSubmit}>
