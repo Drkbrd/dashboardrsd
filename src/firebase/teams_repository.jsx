@@ -1,8 +1,7 @@
 import { db } from './firebase_config'
 import { collection, getDocs, query, onSnapshot, addDoc } from "firebase/firestore";
 
-
-
+//Get all the teams
 export async function getAllTeams(setTeams) {
     const querySnapshot = await getDocs(collection(db, "team"));
     querySnapshot.forEach((doc) => {
@@ -14,6 +13,7 @@ export async function getAllTeams(setTeams) {
     setTeams(newData)
 }
 
+//Get all the teams
 export async function getAsyncTeams(setTeams) {
     const q = await query(collection(db, "team"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -23,6 +23,7 @@ export async function getAsyncTeams(setTeams) {
     });
 }
 
+//Registrar escore del team
 export async function asignPoints(fkst, fkteam, timestam, totScore) {
     try {
         const docRef = await addDoc(collection(db, "score"), {
@@ -37,6 +38,7 @@ export async function asignPoints(fkst, fkteam, timestam, totScore) {
     }
 }
 
+//Creación de un Team
 export async function createTeam(amnt, chnt, clr, crtAt, nm, scr) {
     try {
         const docRef = await addDoc(collection(db, "team"), {
@@ -46,6 +48,21 @@ export async function createTeam(amnt, chnt, clr, crtAt, nm, scr) {
             create_at: crtAt,
             name: nm,
             score: scr
+        });
+        console.log("Team written with ID: ", docRef.id);
+    } catch (e) {
+        console.error("Error adding team: ", e);
+    }
+}
+
+//Creación de Station
+export async function createStation(nm, dscrpt, minVl, mxVl) {
+    try {
+        const docRef = await addDoc(collection(db, "station"), {
+            name: nm,
+            description: dscrpt,
+            maxVal: mxVl,
+            minValue: minVl
         });
         console.log("Team written with ID: ", docRef.id);
     } catch (e) {

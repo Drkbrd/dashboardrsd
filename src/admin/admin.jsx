@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import { createTeam } from '../firebase/teams_repository'
+import { createTeam, createStation } from '../firebase/teams_repository'
 
 function AdminControl() {
 
@@ -22,13 +22,19 @@ function AdminControl() {
     const stationInputMax = useId();
     const stationInputMin = useId();
 
+    // Form register User
+    const userInputNmae = useId();
+    const userInputPassword = useId();
+    const userInputIsAdmin = useId(false);
+    const userInputStation = useId();
+
     // Form register team
     const [teamName, setTeamName] = useState("");
     const [teamColour, setTeamColour] = useState("#rrggbb");
     const [teamChant, setTeamChant] = useState("");
     const [teamTotal, setTeamTotal] = useState(0);
 
-    //FOrm refister team
+    //FOrm refister Station
     const [stationName, setstationName] = useState("");
     const [stationDescr, setstationDescr] = useState("");
     const [stationMAX, setstationMAX] = useState(0);
@@ -74,29 +80,59 @@ function AdminControl() {
                 <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onContextMenu={handleSubmit} onClick={() => createTeam(parseInt(teamTotal), teamChant, teamColour, dater, teamName, 0)}>Send</button>
             </form>
             <hr />
+            <hr />
             {/*Form resgister Station*/}
             <form method='post' onSubmit={handleSubmit}>
                 <label htmlFor={stationInputNmae}>
                     Station Name:
-                    <input id={stationInputNmae} name="SttnName" type="color" placeholder="Write the station's name" value={teamColour} onChange={e => setTeamColour(e.target.value)}></input>
+                    <input id={stationInputNmae} name="SttnName" type="text" placeholder="Write the station's name" value={stationName} onChange={e => setstationName(e.target.value)}></input>
                 </label>
                 <hr />
                 <label htmlFor={stationInputDescription}>
                     Description as step by step:
-                    <input id={stationInputDescription} name="DscptnSttn" type="text" placeholder="Write the station's description" value={teamName} onChange={e => setTeamName(e.target.value)}></input>
+                    <input id={stationInputDescription} name="DscptnSttn" type="text" placeholder="Write the station's description" value={stationDescr} onChange={e => setstationDescr(e.target.value)}></input>
                 </label>
                 <hr />
                 <label htmlFor={stationInputMax}>
                     Max points:
-                    <input id={stationInputMax} name="MxPnts" type="number" placeholder="Write the min score allowed" value={teamName} onChange={e => setTeamName(e.target.value)}></input>
+                    <input id={stationInputMax} name="MxPnts" type="number" value={stationMAX} onChange={e => setstationMAX(e.target.value)}></input>
                 </label>
                 <hr />
                 <label htmlFor={stationInputMin}>
                     Min points:
-                    <input id={stationInputMin} name="MnPnts" type="number" placeholder="Write the min score allowed" value={teamName} onChange={e => setTeamName(e.target.value)}></input>
+                    <input id={stationInputMin} name="MnPnts" type="number" value={stationMin} onChange={e => setstationMin(e.target.value)}></input>
                 </label>
                 <hr />
-                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onContextMenu={handleSubmit} onClick={() => createTeam(parseInt(teamTotal), teamChant, teamColour, dater, teamName, 0)}>Send</button>
+                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onContextMenu={handleSubmit} onClick={() => createStation(stationName, stationDescr, parseInt(stationMAX), parseInt(stationMin))}>Send</button>
+            </form>
+            <hr />
+            <hr />
+            {/*Form resgister User*/}
+            <form method='post' onSubmit={handleSubmit}>
+                <label htmlFor={stationInputNmae}>
+                    User name:
+                    <input id={stationInputNmae} name="SttnName" type="text" placeholder="Write the station's name" value={stationName} onChange={e => setstationName(e.target.value)}></input>
+                </label>
+                <hr />
+                <label htmlFor={stationInputDescription}>
+                    Pasword:
+                    <input id={stationInputDescription} name="DscptnSttn" type="password" placeholder="Write the station's description" value={stationDescr} onChange={e => setstationDescr(e.target.value)}></input>
+                </label>
+                <hr />
+                <label htmlFor={stationInputMax}>
+                    Is admin:
+                    <select>
+                        <option value="true">yes</option>
+                        <option value="false">no</option> {/*Estoy aquí, para validar que es true y qué es false*/}
+                    </select>
+                </label>
+                <hr />
+                <label htmlFor={stationInputMin}>
+                    Min points:
+                    <input id={stationInputMin} name="MnPnts" type="number" value={stationMin} onChange={e => setstationMin(e.target.value)}></input>
+                </label>
+                <hr />
+                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onContextMenu={handleSubmit} onClick={() => createStation(stationName, stationDescr, parseInt(stationMAX), parseInt(stationMin))}>Send</button>
             </form>
         </>
     );
