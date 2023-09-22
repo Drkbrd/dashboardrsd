@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './style.css'
-import { db, initializeFirebase } from './firebase_config.jsx'
+import { db, app } from '../firebase/firebase_config.jsx'
 import { create } from './create.jsx'
+import { getAllTeams, getAsyncTeams } from '../firebase/teams_repository'
 
-
+/*
 const listTeams = [
     { "name": "Equipo 8", "score": 8, "clr": "#C0392B" },
     { "name": "Equipo 4", "score": 4, "clr": "#F1948A" },
@@ -14,44 +15,47 @@ const listTeams = [
     { "name": "Equipo 10", "score": 10, "clr": "#1ABC9C" },
     { "name": "Equipo 6", "score": 6, "clr": "#D4AC0D" },
     { "name": "Equipo 9", "score": 9, "clr": "#F5B041" },
-    { "name": "Equipo 2", "score": 2, "clr": "#D35400" }
+    { "name": "Equipo 2", "score": 2, "clr": "#D35400" },
+    { "name": "Equipo 11", "score": 11, "clr": "#D95400" },
+    { "name": "Equipo 12", "score": 12, "clr": "#D54400" }
 ]
 
-const sortList = listTeams.sort((a, b) => a.score - b.score)
+const sortList = listTeams.sort((a, b) => a.score - b.score)*/
 
 function Dashboard() {
     const [count, setCount] = useState(1)
-    initializeFirebase()
+    const [teams, setTeams] = useState([])
+    //getAllTeams()
+    useEffect(() => { getAsyncTeams(setTeams) }, [])
     return (
         <>
-            <h1>Dashboard</h1>
-            <p>Here you  will see the podioum of your Brotherhood</p>
-            <div className="container text-center">
-                {sortList.map((team, index) => (
-                    <div key={index} className="row" style={{ backgroundColor: team.clr }}>
-                        <div class="col">{team.name}</div>
-                        <div class="col">{team.score}</div>
-                    </div>
-                ))}
-            </div>
-            <div></div>
-            <h2>Bottons to edit the BD</h2>
-            <p>Here you will control de DataBase</p>
-            <div class="container-fluid">
-                <div className="row">
-                    <div class="col"> {/*Botton add*/}
-                        <button onClick={() => create(db())}>
-                            Add item
-                        </button>
-                    </div>
-                    <div class="col"> {/*Botton delete*/}
-                        <button onClick={() => deleteIt(db())}>
-                            Delete item
-                        </button>
-                    </div>
+            <div className="p-3 mb-2 bg-dark text-white; fullBody">
+                <h1 className="textStyle">Dashboard</h1>
+                <p className="textStyle2">Here you  will see the podioum of your Brotherhood</p>
+                <div className="container text-center">
+                    {teams.sort((a, b) => b.score - a.score).map((team) => (
+                        <div key={team.id} className="row" style={{ backgroundColor: team.color }}>
+                            <div className="col">{team.name}</div>
+                            <div className="col">{team.score}</div>
+                        </div>
+                    ))}
                 </div>
-            </div>
-
+                <div></div>
+                <h2 className="textStyle2">Bottons to edit the BD</h2>
+                <p className="textStyle2">Here you will control de DataBase</p>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col"> {/*Botton add*/}
+                            <button onClick={() => getAllTeams()}>
+                                Add item
+                            </button>
+                        </div>
+                        <div className="d-grid gap-2 d-md-flex justify-content-md-end"> {/*Ingresar*/}
+                            <button className="btn btn-primary me-md-2" type="button">Logg in</button>
+                        </div>
+                    </div>
+                </div >
+            </div >
         </>
     )
 }

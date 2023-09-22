@@ -15,9 +15,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export function initializeFirebase () { return initializeApp(firebaseConfig)};
-export function db(){
-    return getFirestore(initializeFirebase());
-}
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig); (firebaseConfig);
+
+// Initialize Cloud Firestore and get a reference to the service
+export const db = getFirestore(app);
 
 

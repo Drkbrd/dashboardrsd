@@ -1,13 +1,15 @@
 import { collection, addDoc } from "firebase/firestore";
-
 import 'firebase/database';
 
 export async function create(db) {
   try {
-    const docRef = await addDoc(collection(db, "users"), {
-      first: "ALan",
-      last: "Touring",
-      born: 1815
+    const docRef = await addDoc(collection(db, "team"), {
+      amount: "12",
+      chant: "porra 12",
+      color: "#6B94FF",
+      create_at: "7 sept 2023",
+      name: "Equipo 12",
+      score: 28
     });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
