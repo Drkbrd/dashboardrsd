@@ -10,15 +10,29 @@ function AdminControl() {
     const dateDisplay = getCurrentDateAndTime();
     const dater = new Date(dateDisplay);
 
+    // Form register team
     const nameInputId = useId();
     const colourInputId = useId();
     const chantInputId = useId();
     const teamInputId = useId();
 
+    // Form register Station
+    const stationInputNmae = useId();
+    const stationInputDescription = useId();
+    const stationInputMax = useId();
+    const stationInputMin = useId();
+
+    // Form register team
     const [teamName, setTeamName] = useState("");
     const [teamColour, setTeamColour] = useState("#rrggbb");
     const [teamChant, setTeamChant] = useState("");
     const [teamTotal, setTeamTotal] = useState(0);
+
+    //FOrm refister team
+    const [stationName, setstationName] = useState("");
+    const [stationDescr, setstationDescr] = useState("");
+    const [stationMAX, setstationMAX] = useState(0);
+    const [stationMin, setstationMin] = useState(0);
 
     function handleSubmit(e) {
         // Prevent the browser from reloading the page
@@ -35,6 +49,7 @@ function AdminControl() {
 
     return (
         <>
+            {/*Form resgister team*/}
             <form method='post' onSubmit={handleSubmit}>
                 <label htmlFor={colourInputId}>
                     Team's color:
@@ -54,6 +69,31 @@ function AdminControl() {
                 <label htmlFor={teamInputId}>
                     Team's members:
                     <input id={teamInputId} name="teamInputId" type="number" value={teamTotal} onChange={e => setTeamTotal(e.target.value)}></input>
+                </label>
+                <hr />
+                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onContextMenu={handleSubmit} onClick={() => createTeam(parseInt(teamTotal), teamChant, teamColour, dater, teamName, 0)}>Send</button>
+            </form>
+            <hr />
+            {/*Form resgister Station*/}
+            <form method='post' onSubmit={handleSubmit}>
+                <label htmlFor={stationInputNmae}>
+                    Station Name:
+                    <input id={stationInputNmae} name="SttnName" type="color" placeholder="Write the station's name" value={teamColour} onChange={e => setTeamColour(e.target.value)}></input>
+                </label>
+                <hr />
+                <label htmlFor={stationInputDescription}>
+                    Description as step by step:
+                    <input id={stationInputDescription} name="DscptnSttn" type="text" placeholder="Write the station's description" value={teamName} onChange={e => setTeamName(e.target.value)}></input>
+                </label>
+                <hr />
+                <label htmlFor={stationInputMax}>
+                    Max points:
+                    <input id={stationInputMax} name="MxPnts" type="number" placeholder="Write the min score allowed" value={teamName} onChange={e => setTeamName(e.target.value)}></input>
+                </label>
+                <hr />
+                <label htmlFor={stationInputMin}>
+                    Min points:
+                    <input id={stationInputMin} name="MnPnts" type="number" placeholder="Write the min score allowed" value={teamName} onChange={e => setTeamName(e.target.value)}></input>
                 </label>
                 <hr />
                 <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onContextMenu={handleSubmit} onClick={() => createTeam(parseInt(teamTotal), teamChant, teamColour, dater, teamName, 0)}>Send</button>

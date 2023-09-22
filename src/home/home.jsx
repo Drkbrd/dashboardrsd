@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import Dashboard from '../dashboard/dashboard'
 import Score from '../score/score'
+import Admin from '../admin/admin'
 
 function Home() {
     const [route, setRoute] = useState('score')
     const routes = {
         dashboard: Dashboard(),
-        score: Score()
+        score: Score(),
+        admin: Admin()
     }
 
     function handleClick(e) {
@@ -29,6 +31,9 @@ function Home() {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" name="score" onClick={handleClick}>Score</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" name="admin" onClick={handleClick}>Admin</a>
                             </li>
                         </ul>
                     </div>
