@@ -37,6 +37,20 @@ export async function asignPoints(fkst, fkteam, timestam, totScore) {
         console.error("Error adding document: ", e);
     }
 }
+//Get and edit teams
+export async function getEditTeams(setTeams) {
+    const querySnapshot = await getDocs(collection(db, "team"));
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+    });
+    const newData = querySnapshot.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }));
+    setTeams(newData)
+}
+
+
+
 
 //Creación de un Team
 export async function createTeam(amnt, chnt, clr, crtAt, nm, scr) {
@@ -63,6 +77,21 @@ export async function createStation(nm, dscrpt, minVl, mxVl) {
             description: dscrpt,
             maxVal: mxVl,
             minValue: minVl
+        });
+        console.log("Team written with ID: ", docRef.id);
+    } catch (e) {
+        console.error("Error adding team: ", e);
+    }
+}
+
+//Creación de users
+export async function createUser(usrNme, psswrd, sdmn, fkSttn) {
+    try {
+        const docRef = await addDoc(collection(db, "user"), {
+            userName: usrNme,
+            password: psswrd,
+            is_admin: sdmn,
+            FK_station: fkSttn
         });
         console.log("Team written with ID: ", docRef.id);
     } catch (e) {

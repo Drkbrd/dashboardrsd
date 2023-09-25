@@ -1,5 +1,5 @@
-import { useId, useState } from 'react';
-import { createTeam, createStation } from '../firebase/teams_repository'
+import { useId, useState, useEffect } from 'react';
+import { createTeam, createStation, createUser, getEditTeams } from '../firebase/teams_repository'
 
 function AdminControl() {
 
@@ -25,7 +25,7 @@ function AdminControl() {
     // Form register User
     const userInputNmae = useId();
     const userInputPassword = useId();
-    const userInputIsAdmin = useId(false);
+    const userInputFalseAdmin = useId();
     const userInputStation = useId();
 
     // Form register team
@@ -34,11 +34,22 @@ function AdminControl() {
     const [teamChant, setTeamChant] = useState("");
     const [teamTotal, setTeamTotal] = useState(0);
 
-    //FOrm refister Station
-    const [stationName, setstationName] = useState("");
-    const [stationDescr, setstationDescr] = useState("");
-    const [stationMAX, setstationMAX] = useState(0);
-    const [stationMin, setstationMin] = useState(0);
+    //FOrm register Station
+    const [stationName, setStationName] = useState("");
+    const [stationDescr, setStationDescr] = useState("");
+    const [stationMAX, setStationMAX] = useState(0);
+    const [stationMin, setStationMin] = useState(0);
+
+    //FOrm register Station
+    const [userName, setUserName] = useState("");
+    const [password, setPasword] = useState("");
+    const [isAdmin, setAdmin] = useState("");
+    const isTrueSet = (isAdmin === 'true');
+    const [stationFK, setStationFk] = useState("");
+
+    //Traer tabla
+    const [bringTable, setBringTable] = useState([]);
+    useEffect(() => { getEditTeams(setBringTable) }, [])
 
     function handleSubmit(e) {
         // Prevent the browser from reloading the page
@@ -52,11 +63,45 @@ function AdminControl() {
         const formJson = Object.fromEntries(formData.entries());
         //console.log(formJson);
     }
+    /*
+    function reset() {
+        useState.setTeamName
+            setTeamColour.useState("#rrggbb"),
+            setTeamChant.useState(""),
+            setTeamTotal.useState(0),
+            setStationName.useState(""),
+            setStationDescr.useState(""),
+            setStationMAX.useState(0),
+            setStationMin.useState(0),
+            setUserName.useState(""),
+            setPasword.useState(""),
+            setAdmin.useState(""),
+            setStationFk.useState("")
+
+    }*/
 
     return (
         <>
+            <div className="container text-center">
+                <div className="row">
+                    <div className="col">ID</div>
+                    <div className="col">Name</div>
+                    <div className="col">Chant</div>
+                    <div className="col">Amount</div>
+                </div>
+            </div>
+            <div className="container text-center">
+                {bringTable.map((e) => (
+                    <div key={e.id} className="row">
+                        <div className="col">{e.id}</div>
+                        <div className="col">{e.name}</div>
+                        <div className="col">{e.chant}</div>
+                        <div className="col">{e.amount}</div>
+                    </div>
+                ))}
+            </div>
             {/*Form resgister team*/}
-            <form method='post' onSubmit={handleSubmit}>
+            <form method='post' onSubmit={handleSubmit} id="allForm">
                 <label htmlFor={colourInputId}>
                     Team's color:
                     <input id={colourInputId} name="colourInputId" type="color" value={teamColour} onChange={e => setTeamColour(e.target.value)}></input>
@@ -77,7 +122,7 @@ function AdminControl() {
                     <input id={teamInputId} name="teamInputId" type="number" value={teamTotal} onChange={e => setTeamTotal(e.target.value)}></input>
                 </label>
                 <hr />
-                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onContextMenu={handleSubmit} onClick={() => createTeam(parseInt(teamTotal), teamChant, teamColour, dater, teamName, 0)}>Send</button>
+                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendTeam" onContextMenu={handleSubmit} onClick={() => createTeam(parseInt(teamTotal), teamChant, teamColour, dater, teamName, 0)}>Send</button>
             </form>
             <hr />
             <hr />
@@ -85,56 +130,62 @@ function AdminControl() {
             <form method='post' onSubmit={handleSubmit}>
                 <label htmlFor={stationInputNmae}>
                     Station Name:
-                    <input id={stationInputNmae} name="SttnName" type="text" placeholder="Write the station's name" value={stationName} onChange={e => setstationName(e.target.value)}></input>
+                    <input id={stationInputNmae} name="SttnName" type="text" placeholder="Write the station's name" value={stationName} onChange={e => setStationName(e.target.value)}></input>
                 </label>
                 <hr />
                 <label htmlFor={stationInputDescription}>
                     Description as step by step:
-                    <input id={stationInputDescription} name="DscptnSttn" type="text" placeholder="Write the station's description" value={stationDescr} onChange={e => setstationDescr(e.target.value)}></input>
+                    <input id={stationInputDescription} name="DscptnSttn" type="text" placeholder="Write the station's description" value={stationDescr} onChange={e => setStationDescr(e.target.value)}></input>
                 </label>
                 <hr />
                 <label htmlFor={stationInputMax}>
                     Max points:
-                    <input id={stationInputMax} name="MxPnts" type="number" value={stationMAX} onChange={e => setstationMAX(e.target.value)}></input>
+                    <input id={stationInputMax} name="MxPnts" type="number" value={stationMAX} onChange={e => setStationMAX(e.target.value)}></input>
                 </label>
                 <hr />
                 <label htmlFor={stationInputMin}>
                     Min points:
-                    <input id={stationInputMin} name="MnPnts" type="number" value={stationMin} onChange={e => setstationMin(e.target.value)}></input>
+                    <input id={stationInputMin} name="MnPnts" type="number" value={stationMin} onChange={e => setStationMin(e.target.value)}></input>
                 </label>
                 <hr />
-                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onContextMenu={handleSubmit} onClick={() => createStation(stationName, stationDescr, parseInt(stationMAX), parseInt(stationMin))}>Send</button>
+                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendStation" onContextMenu={handleSubmit} onClick={() => createStation(stationName, stationDescr, parseInt(stationMAX), parseInt(stationMin))}>Send</button>
             </form>
             <hr />
             <hr />
             {/*Form resgister User*/}
             <form method='post' onSubmit={handleSubmit}>
-                <label htmlFor={stationInputNmae}>
+                <label htmlFor={userInputNmae}>
                     User name:
-                    <input id={stationInputNmae} name="SttnName" type="text" placeholder="Write the station's name" value={stationName} onChange={e => setstationName(e.target.value)}></input>
+                    <input id={userInputNmae} name="userName" type="text" placeholder="Write user's name" value={userName} onChange={e => setUserName(e.target.value)}></input>
                 </label>
                 <hr />
-                <label htmlFor={stationInputDescription}>
+                <label htmlFor={userInputPassword}>
                     Pasword:
-                    <input id={stationInputDescription} name="DscptnSttn" type="password" placeholder="Write the station's description" value={stationDescr} onChange={e => setstationDescr(e.target.value)}></input>
+                    <input id={userInputPassword} name="userPasword" type="password" value={password} onChange={e => setPasword(e.target.value)}></input>
                 </label>
                 <hr />
-                <label htmlFor={stationInputMax}>
+                <label htmlFor={userInputFalseAdmin}>
                     Is admin:
-                    <select>
-                        <option value="true">yes</option>
-                        <option value="false">no</option> {/*Estoy aquí, para validar que es true y qué es false*/}
-                    </select>
+                    <input id="falseId" name="adminBoolean" type="radio" value="true" onChange={e => setAdmin(e.target.value)}></input>
+                    <label htmlFor="falseId">True</label><br></br>
+                    <input id="trueId" name="adminBoolean" type="radio" value="false" onChange={e => setAdmin(e.target.value)}></input>
+                    <label htmlFor="trueId">False</label><br></br>
                 </label>
                 <hr />
-                <label htmlFor={stationInputMin}>
-                    Min points:
-                    <input id={stationInputMin} name="MnPnts" type="number" value={stationMin} onChange={e => setstationMin(e.target.value)}></input>
+                <label htmlFor={userInputStation}>
+                    Station director:
+                    <input id={userInputStation} name="stationDirector" type="text" value={stationFK} onChange={e => setStationFk(e.target.value)}></input>
                 </label>
                 <hr />
-                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onContextMenu={handleSubmit} onClick={() => createStation(stationName, stationDescr, parseInt(stationMAX), parseInt(stationMin))}>Send</button>
+                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendUsear" onContextMenu={handleSubmit} onClick={() => createUser(userName, password, isTrueSet, stationFK)}>Send</button>
+                <hr />
+                <hr />
             </form>
         </>
     );
+
 }
+
+
+
 export default AdminControl
