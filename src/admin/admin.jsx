@@ -23,7 +23,13 @@ function AdminControl() {
         // Or you can work with it as a plain object:
         //const formJson = Object.fromEntries(formData.entries());
         //console.log(formJson);
+        const formJson = Object.fromEntries(formData.entries());
+        e(selectedOption.currentTarget.value);
     }
+
+    function convert(obj) {
+        return JSON.parse(obj)
+    };
 
     //TeamCRUD---------------------------------------------------------------------------------------------------------------------------------
     // Form register team
@@ -70,11 +76,13 @@ function AdminControl() {
     const userInputFalseAdmin = useId();
     const userInputStation = useId();
     const [selectedOption, setSelectedOption] = useState("{}");
+    var conector = [];
 
     var handleChange = (selectedOption) => {
-        console.log(selectedOption.currentTarget.value);
-        setSelectedOption(selectedOption.currentTarget.value);
+        console.log(selectedOption.currentTarget.value.id);
+        setSelectedOption(selectedOption.currentTarget.value.id);
     };
+    //const idTeamToUser = convert(selectedOption).id;
 
 
     //Create User
@@ -92,15 +100,13 @@ function AdminControl() {
         } else {
             await updateUser(user)
         }
-        setUser({ "FK_station": "", "is_admin": "", "password": "", "userName": "" })
+        setUser({ "is_admin": "", "password": "", "userName": "" })
 
     }
-    //Traer tabla teams y eitar
+    //Traer tabla user y eitar
     const [bringTableUsr, setTableUsr] = useState([]);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState([]);
     useEffect(() => { getAsyncUser(setTableUsr) }, [])
-
-
     //UserCRUD---------------------------------------------------------------------------------------------------------------------------------
 
     //StationCRUD---------------------------------------------------------------------------------------------------------------------------------
@@ -118,7 +124,7 @@ function AdminControl() {
         setStation(newStation);
         console.log(newStation)
     }
-    //update User
+    //update Station
     async function upsertStation(station) {
         if (!station["id"]) {
             await createStation(station)
@@ -131,6 +137,7 @@ function AdminControl() {
     //Traer tabla teams y eitar
     const [bringTableStt, setTableStt] = useState([]);
     const [station, setStation] = useState({});
+
     useEffect(() => { getAsyncStation(setTableStt) }, [])
     //StationCRUD---------------------------------------------------------------------------------------------------------------------------------
 
@@ -261,7 +268,7 @@ function AdminControl() {
                         <div className="col">{f.userName}</div>
                         <div className="col">{f.password}</div>
                         <div className="col">{f.is_admin}</div>
-                        <div className="col">{f.FK_station}</div>
+                        <div className="col">{console.log(conector = bringTableStt.map((e) => e.id)) + conector.name}</div>{/*c[omo traer el nom,bre desde la tabla station] */}
                         <div className="col">
                             <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonUpdateUser" onClick={() => setUser(f)}>Edit</button>
                             <button type="submit" className="btn btn-outline-warning btn-lg" id="buttonUpdateUser" onClick={() => deleteUser(f)}>Delete</button>
@@ -294,12 +301,15 @@ function AdminControl() {
                 <hr />
                 <label htmlFor={userInputStation}>
                     Station director:
-                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" onChange={handleChange}>
-                        <option defaultValue>Select a team</option>
-                        {teams.map((team) => {
-                            return <option key={team.id} value={JSON.stringify(team)} > {team.name}</option>
+                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" value={station.name} onChange={e => { handleChange; setUserParam("FK_station", convert(e.target.value).id) }}>
+                        <option defaultValue>Select a station</option>
+                        {bringTableStt.map((e) => {
+                            return <option key={e.id} value={JSON.stringify(e)}>{e.name}</option>
                         })
+
                         }
+                        {/*setUserParam("FK_station", convert(selectedOption).id)
+                        */}
                     </select>
                     {/*<input id={userInputStation} name="stationDirector" type="text" value={user.FK_station} onChange={e => setUserParam("FK_station", e.target.value)}></input>*/}
                 </label>
@@ -313,7 +323,5 @@ function AdminControl() {
     );
 
 }
-
-
 
 export default AdminControl
