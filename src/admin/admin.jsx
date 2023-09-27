@@ -103,6 +103,14 @@ function AdminControl() {
         setUser({ "is_admin": "", "password": "", "userName": "" })
 
     }
+    //bring table filtered
+    function namesFiltere(stationTable) {
+        var conector = bringTableStt.filter((e) => e.id === stationTable);
+        var nameReturn = conector.map((e) => e.name);
+        return nameReturn,
+            console.log(nameReturn);
+    }
+
     //Traer tabla user y eitar
     const [bringTableUsr, setTableUsr] = useState([]);
     const [user, setUser] = useState([]);
@@ -137,7 +145,6 @@ function AdminControl() {
     //Traer tabla teams y eitar
     const [bringTableStt, setTableStt] = useState([]);
     const [station, setStation] = useState({});
-
     useEffect(() => { getAsyncStation(setTableStt) }, [])
     //StationCRUD---------------------------------------------------------------------------------------------------------------------------------
 
@@ -267,8 +274,8 @@ function AdminControl() {
                         {/*<div className="col">{e.id}</div>*/}
                         <div className="col">{f.userName}</div>
                         <div className="col">{f.password}</div>
-                        <div className="col">{f.is_admin}</div>
-                        <div className="col">{console.log(conector = bringTableStt.map((e) => e.id)) + conector.name}</div>{/*c[omo traer el nom,bre desde la tabla station] */}
+                        <div className="col">{f.is_admin.toString()}</div>
+                        <div className="col">{namesFiltere(f.FK_station)}</div>
                         <div className="col">
                             <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonUpdateUser" onClick={() => setUser(f)}>Edit</button>
                             <button type="submit" className="btn btn-outline-warning btn-lg" id="buttonUpdateUser" onClick={() => deleteUser(f)}>Delete</button>
@@ -301,7 +308,7 @@ function AdminControl() {
                 <hr />
                 <label htmlFor={userInputStation}>
                     Station director:
-                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" value={station.name} onChange={e => { handleChange; setUserParam("FK_station", convert(e.target.value).id) }}>
+                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" onChange={e => { handleChange; setUserParam("FK_station", convert(e.target.value).id) }}>
                         <option defaultValue>Select a station</option>
                         {bringTableStt.map((e) => {
                             return <option key={e.id} value={JSON.stringify(e)}>{e.name}</option>
