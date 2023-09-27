@@ -154,7 +154,7 @@ export async function deleteUser(user) {
 }
 //CRUD User-------------------------------------------------------------------------------------------------------
 
-//Registrar escore del team
+/*Registrar escore del team
 export async function asignPoints(fkst, fkteam, timestam, totScore) {
     try {
         const docRef = await addDoc(collection(db, "score"), {
@@ -167,4 +167,4 @@ export async function asignPoints(fkst, fkteam, timestam, totScore) {
     } catch (e) {
         console.error("Error adding document: ", e);
     }
-}
+}*/

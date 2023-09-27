@@ -11,7 +11,7 @@ function AdminControl() {
     const dateDisplay = getCurrentDateAndTime();
     const dater = new Date(dateDisplay);
 
-    //Block update 
+    //Block update -------------------------------------------------------------------------------------------------------------------------------
     function handleSubmit(e) {
         // Prevent the browser from reloading the page
         e.preventDefault();
@@ -30,6 +30,7 @@ function AdminControl() {
     function convert(obj) {
         return JSON.parse(obj)
     };
+    //Block update -------------------------------------------------------------------------------------------------------------------------------
 
     //TeamCRUD---------------------------------------------------------------------------------------------------------------------------------
     // Form register team
@@ -76,7 +77,7 @@ function AdminControl() {
     const userInputFalseAdmin = useId();
     const userInputStation = useId();
     const [selectedOption, setSelectedOption] = useState("{}");
-    var conector = [];
+    var conector = "";
 
     var handleChange = (selectedOption) => {
         console.log(selectedOption.currentTarget.value.id);
