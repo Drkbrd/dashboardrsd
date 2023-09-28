@@ -69,6 +69,7 @@ function Score() {
     */
 
     const [selectedOption, setSelectedOption] = useState("{}");
+
     const [teams, setTeams] = useState([])
 
 
@@ -100,9 +101,6 @@ function Score() {
     useEffect(() => { getAsyncStation(setTableStt) }, [])
     useEffect(() => { getAsyncTeams(setTeams) }, [])
     //Traer tabla teams y eiditar_________________________________________________________________________________________________________________
-
-
-
 
     return (
         <>
@@ -136,10 +134,7 @@ function Score() {
                                 </div>
                             </div>
                         </div>
-
-
                         {/*Here to selct Station----------------------------------------------------------------------------------------------------------------------*/}
-
                         <div className="card-body text-danger; ">
                             {/*Here to selct team---------------------------------------------------------------------------------------------------------------------- */}
                             <div className="text-bg-secondary p-3; row align-items-center">

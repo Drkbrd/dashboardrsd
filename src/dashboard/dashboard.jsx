@@ -41,15 +41,8 @@ function Dashboard() {
                     ))}
                 </div>
                 <div></div>
-                <h2 className="textStyle2">Bottons to edit the BD</h2>
-                <p className="textStyle2">Here you will control de DataBase</p>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col"> {/*Botton add*/}
-                            <button onClick={() => getAllTeams()}>
-                                Add item
-                            </button>
-                        </div>
                         <div className="d-grid gap-2 d-md-flex justify-content-md-end"> {/*Ingresar*/}
                             <button className="btn btn-primary me-md-2" type="button">Logg in</button>
                         </div>

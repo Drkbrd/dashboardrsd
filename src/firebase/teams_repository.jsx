@@ -28,14 +28,14 @@ export async function getAsyncTeams(setTeams) {
 }
 
 export async function getAsyncScore(setTeams) {
-    const q = await query(collection(db, "score"));
+    const q = query(collection(db, "score"));
     var teams = []
     await getAllTeams((t) => teams = t);
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const scores = querySnapshot.docs
-            .map((doc) => ({ ...doc.data(), id: doc.id }));
-        teams.forEach((team) => team.score = scores.filter((score) => score["fk_team"] == team.id).reduce((accumulator, score) => accumulator + score.score, 0))
-        setTeams(teams)
+        const scores = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        const newTeamsRef = teams.map((team) => ({ ...team, score: 0 }));
+        newTeamsRef.forEach((team) => team.score = scores.filter((score) => score["fk_team"] == team.id).reduce((accumulator, score) => accumulator + score.score, 0))
+        setTeams(newTeamsRef)
     });
 }
 
