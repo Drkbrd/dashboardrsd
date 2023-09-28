@@ -6,7 +6,7 @@ function AdminControl() {
     //Get date
     function getCurrentDateAndTime() {
         const dateTime = new Date();
-        return dateTime.toLocaleString();
+        return dateTime;
     };
     const dateDisplay = getCurrentDateAndTime();
     const dater = new Date(dateDisplay);
@@ -52,7 +52,7 @@ function AdminControl() {
     //update team
     async function upsertTeam(team) {
         if (!team["create_at"]) {
-            team["create_at"] = toString(dater)
+            team["create_at"] = dater
         }
         if (!team["score"]) {
             team["score"] = 0
@@ -150,180 +150,213 @@ function AdminControl() {
 
     return (
         <>
-            {/*Table Teams------------------------------------------------------------------------------------------------------------------------------*/}
-            <div className="container text-center">
-                <div className="row">
-                    {/*<div className="col">ID</div>*/}
-                    <div className="col">Name</div>
-                    <div className="col">Chant</div>
-                    <div className="col">Amount</div>
-                    <div className="col">Update</div>
-                </div>
-            </div>
-            <div className="container text-center">
-                {bringTable.map((e) => (
-                    <div key={e.id} className="row">
-                        {/*<div className="col">{e.id}</div>*/}
-                        <div className="col">{e.name}</div>
-                        <div className="col">{e.chant}</div>
-                        <div className="col">{e.amount}</div>
-                        <div className="col">
-                            <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonUpdateTeam" onClick={() => setTeam(e)}>Edit</button>
-                            <button type="submit" className="btn btn-outline-warning btn-lg" id="buttonDeleteTeam" onClick={() => deleteTeam(e)}>Delete</button>
+            <div class="bg-success p-2 text-white fullbody">
+                {/**visual section and tes---------------------------- */}
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Team Administration
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                {/*Form resgister team------------------------------------------------------------------------------------------------------------------------------*/}
+                                <form id="allForm" onSubmit={handleSubmit}>
+                                    <label htmlFor={colourInputId}>
+                                        Team's color:
+                                        <input id={colourInputId} name="colourInputId" type="color" value={team.color} onChange={e => setTeamParam("color", e.target.value)}></input>
+                                    </label>
+                                    <hr />
+                                    <label htmlFor={nameInputId}>
+                                        Team's name:
+                                        <input id={nameInputId} name="nameInputId" type="text" placeholder="Write the teams's name" value={team.name} onChange={e => setTeamParam("name", e.target.value)}></input>
+                                    </label>
+                                    <hr />
+                                    <label htmlFor={chantInputId}>
+                                        Team's chant:
+                                        <input id={chantInputId} name="chantInputId" placeholder="Write the team's chant" type="text" value={team.chant} onChange={e => setTeamParam("chant", e.target.value)}></input>
+                                    </label>
+                                    <hr />
+                                    <label htmlFor={teamInputId}>
+                                        Team's members:
+                                        <input id={teamInputId} name="teamInputId" type="number" value={team.amount} onChange={e => setTeamParam("amount", parseInt(e.target.value))}></input>
+                                    </label>
+                                    <hr />
+                                    <button type="submit" className="btn btn-outline-success btn-sm" id="buttonSendTeam" onClick={() => upsertTeam(team)}>Send</button>
+                                    {/*createTeam(parseInt(teamTotal), teamChant, teamColour, dater, teamName, 0)*/}
+                                </form>
+                                {/*Form resgister team------------------------------------------------------------------------------------------------------------------------------*/}
+                                {/*Table Teams------------------------------------------------------------------------------------------------------------------------------*/}
+                                <div className="container text-center">
+                                    <div className="row">
+                                        {/*<div className="col">ID</div>*/}
+                                        <div className="col">Name</div>
+                                        <div className="col">Chant</div>
+                                        <div className="col">Amount</div>
+                                        <div className="col">Update</div>
+                                    </div>
+                                </div>
+                                <div className="container text-center">
+                                    {bringTable.map((e) => (
+                                        <div key={e.id} className="row">
+                                            {/*<div className="col">{e.id}</div>*/}
+                                            <div className="col">{e.name}</div>
+                                            <div className="col">{e.chant}</div>
+                                            <div className="col">{e.amount}</div>
+                                            <div className="col">
+                                                <button type="submit" className="btn btn-sm btn-outline-warning" id="buttonUpdateTeam" onClick={() => setTeam(e)}>Edit</button>
+                                                <button type="submit" className="btn btn-sm btn-outline-danger" id="buttonDeleteTeam" onClick={() => deleteTeam(e)}>Delete</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                {/*Table Teams------------------------------------------------------------------------------------------------------------------------------*/}
+                            </div>
                         </div>
                     </div>
-                ))}
-            </div>
-            {/*Table Teams------------------------------------------------------------------------------------------------------------------------------*/}
-            {/*Form resgister team------------------------------------------------------------------------------------------------------------------------------*/}
-            <form id="allForm" onSubmit={handleSubmit}>
-                <label htmlFor={colourInputId}>
-                    Team's color:
-                    <input id={colourInputId} name="colourInputId" type="color" value={team.color} onChange={e => setTeamParam("color", e.target.value)}></input>
-                </label>
-                <hr />
-                <label htmlFor={nameInputId}>
-                    Team's name:
-                    <input id={nameInputId} name="nameInputId" type="text" placeholder="Write the teams's name" value={team.name} onChange={e => setTeamParam("name", e.target.value)}></input>
-                </label>
-                <hr />
-                <label htmlFor={chantInputId}>
-                    Team's chant:
-                    <input id={chantInputId} name="chantInputId" placeholder="Write the team's chant" type="text" value={team.chant} onChange={e => setTeamParam("chant", e.target.value)}></input>
-                </label>
-                <hr />
-                <label htmlFor={teamInputId}>
-                    Team's members:
-                    <input id={teamInputId} name="teamInputId" type="number" value={team.amount} onChange={e => setTeamParam("amount", parseInt(e.target.value))}></input>
-                </label>
-                <hr />
-                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendTeam" onClick={() => upsertTeam(team)}>Send</button>
-                {/*createTeam(parseInt(teamTotal), teamChant, teamColour, dater, teamName, 0)*/}
-            </form>
-            {/*Form resgister team------------------------------------------------------------------------------------------------------------------------------*/}
-            <hr />
-            <hr />
-            {/*Table station------------------------------------------------------------------------------------------------------------------------------*/}
-            <div className="container text-center">
-                <div className="row">
-                    {/*<div className="col">ID</div>*/}
-                    <div className="col">Name</div>
-                    <div className="col">Description</div>
-                    <div className="col">Max</div>
-                    <div className="col">min</div>
-                    <div className="col">Update</div>
-                </div>
-            </div>
-            <div className="container text-center">
-                {bringTableStt.map((e) => (
-                    <div key={e.id} className="row">
-                        {/*<div className="col">{e.id}</div>*/}
-                        <div className="col">{e.name}</div>
-                        <div className="col">{e.description}</div>
-                        <div className="col">{e.maxVal}</div>
-                        <div className="col">{e.minValue}</div>
-                        <div className="col">
-                            <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonUpdateSttn" onClick={() => setStation(e)}>Edit</button>
-                            <button type="submit" className="btn btn-outline-warning btn-lg" id="buttonDeleteSttn" onClick={() => deleteStation(e)}>Delete</button>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                Station administration
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                {/*Table Station------------------------------------------------------------------------------------------------------------------------------*/}
+                                {/*Form resgister Station-----------------------------------------------------------------------------------------*/}
+                                <form onSubmit={handleSubmit}>
+                                    <label htmlFor={stationInputNmae}>
+                                        Station Name:
+                                        <input id={stationInputNmae} name="SttnName" type="text" placeholder="Write the station's name" value={station.name} onChange={e => setStationParam("name", e.target.value)}></input>
+                                    </label>
+                                    <hr />
+                                    <label htmlFor={stationInputDescription}>
+                                        Description as step by step:
+                                        <input id={stationInputDescription} name="DscptnSttn" type="text" placeholder="Write the station's description" value={station.description} onChange={e => setStationParam("description", e.target.value)}></input>
+                                    </label>
+                                    <hr />
+                                    <label htmlFor={stationInputMax}>
+                                        Max points:
+                                        <input id={stationInputMax} name="MxPnts" type="number" value={station.maxVal} onChange={e => setStationParam("maxVal", e.target.value)}></input>
+                                    </label>
+                                    <hr />
+                                    <label htmlFor={stationInputMin}>
+                                        Min points:
+                                        <input id={stationInputMin} name="MnPnts" type="number" value={station.minValue} onChange={e => setStationParam("minValue", e.target.value)}></input>
+                                    </label>
+                                    <hr />
+                                    <button type="submit" className="btn btn-outline-success btn-sm" id="buttonSendStation" onClick={() => upsertStation(station)}>Send</button>
+                                </form>
+                                {/*Form resgister Station-----------------------------------------------------------------------------------------*/}
+                                {/*Table station------------------------------------------------------------------------------------------------------------------------------*/}
+                                <div className="container text-center">
+                                    <div className="row">
+                                        {/*<div className="col">ID</div>*/}
+                                        <div className="col">Name</div>
+                                        <div className="col">Description</div>
+                                        <div className="col">Max</div>
+                                        <div className="col">min</div>
+                                        <div className="col">Update</div>
+                                    </div>
+                                </div>
+                                <div className="container text-center">
+                                    {bringTableStt.map((e) => (
+                                        <div key={e.id} className="row">
+                                            {/*<div className="col">{e.id}</div>*/}
+                                            <div className="col">{e.name}</div>
+                                            <div className="col">{e.description}</div>
+                                            <div className="col">{e.maxVal}</div>
+                                            <div className="col">{e.minValue}</div>
+                                            <div className="col">
+                                                <button type="submit" className="btn btn-sm btn-outline-warning" id="buttonUpdateSttn" onClick={() => setStation(e)}>Edit</button>
+                                                <button type="submit" className="btn btn-sm btn-outline-danger" id="buttonDeleteSttn" onClick={() => deleteStation(e)}>Delete</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                {/*Table station------------------------------------------------------------------------------------------------------------------------------*/}
+                            </div>
                         </div>
                     </div>
-                ))}
-            </div>
-            {/*Table Station------------------------------------------------------------------------------------------------------------------------------*/}
-            {/*Form resgister Station-----------------------------------------------------------------------------------------*/}
-            <form onSubmit={handleSubmit}>
-                <label htmlFor={stationInputNmae}>
-                    Station Name:
-                    <input id={stationInputNmae} name="SttnName" type="text" placeholder="Write the station's name" value={station.name} onChange={e => setStationParam("name", e.target.value)}></input>
-                </label>
-                <hr />
-                <label htmlFor={stationInputDescription}>
-                    Description as step by step:
-                    <input id={stationInputDescription} name="DscptnSttn" type="text" placeholder="Write the station's description" value={station.description} onChange={e => setStationParam("description", e.target.value)}></input>
-                </label>
-                <hr />
-                <label htmlFor={stationInputMax}>
-                    Max points:
-                    <input id={stationInputMax} name="MxPnts" type="number" value={station.maxVal} onChange={e => setStationParam("maxVal", e.target.value)}></input>
-                </label>
-                <hr />
-                <label htmlFor={stationInputMin}>
-                    Min points:
-                    <input id={stationInputMin} name="MnPnts" type="number" value={station.minValue} onChange={e => setStationParam("minValue", e.target.value)}></input>
-                </label>
-                <hr />
-                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendStation" onClick={() => upsertStation(station)}>Send</button>
-            </form>
-            {/*Form resgister Station-----------------------------------------------------------------------------------------*/}
-            <hr />
-            <hr />
-            {/*Table Users------------------------------------------------------------------------------------------------------------------------------*/}
-            <div className="container text-center">
-                <div className="row">
-                    {/*<div className="col">ID</div>*/}
-                    <div className="col">User name</div>
-                    <div className="col">Pasword</div>
-                    <div className="col">Is admin</div>
-                    <div className="col">Station</div>
-                    <div className="col">Update</div>
-                </div>
-            </div>
-            <div className="container text-center">
-                {bringTableUsr.map((f) => (
-                    <div key={f.id} className="row">
-                        {/*<div className="col">{e.id}</div>*/}
-                        <div className="col">{f.userName}</div>
-                        <div className="col">{f.password}</div>
-                        <div className="col">{f.is_admin.toString()}</div>
-                        <div className="col">{namesFiltere(f.FK_station)}</div>
-                        <div className="col">
-                            <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonUpdateUser" onClick={() => setUser(f)}>Edit</button>
-                            <button type="submit" className="btn btn-outline-warning btn-lg" id="buttonUpdateUser" onClick={() => deleteUser(f)}>Delete</button>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                users administration
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                {/*Form resgister User-----------------------------------------------------------------------------------------------------------------------------------------*/}
+                                <form method='post' onSubmit={handleSubmit}>
+                                    <label htmlFor={userInputNmae}>
+                                        User name:
+                                        <input id={userInputNmae} name="userName" type="text" placeholder="Write user's name" value={user.userName} onChange={e => setUserParam("userName", e.target.value)}></input>
+                                    </label>
+                                    <hr />
+                                    <label htmlFor={userInputPassword}>
+                                        Pasword:
+                                        <input id={userInputPassword} name="userPasword" type="password" value={user.password} onChange={e => setUserParam("password", e.target.value)}></input>
+                                    </label>
+                                    <hr />
+                                    <label htmlFor={userInputFalseAdmin}>
+                                        Is admin:
+                                        <input id="falseId" name="adminBoolean" type="radio" value={user.is_admin} onChange={e => setUserParam("is_admin", (e.target.value = true))}></input>
+                                        <label htmlFor="falseId">True</label><br></br>
+                                        <input id="trueId" name="adminBoolean" type="radio" value={user.is_admin} onChange={e => setUserParam("is_admin", (e.target.value = false))}></input>
+                                        <label htmlFor="trueId">False</label><br></br>
+                                    </label>
+                                    <hr />
+                                    <label htmlFor={userInputStation}>
+                                        Station director:
+                                        <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" onChange={e => { handleChange; setUserParam("FK_station", convert(e.target.value).id) }}>
+                                            <option>Select a station</option>
+                                            {bringTableStt.map((e) => {
+                                                return <option key={e.id} value={JSON.stringify(e)}>{e.name}</option>
+                                            })
+                                            }
+                                            {/*setUserParam("FK_station", convert(selectedOption).id)*/}
+                                        </select>
+                                        {/*<input id={userInputStation} name="stationDirector" type="text" value={user.FK_station} onChange={e => setUserParam("FK_station", e.target.value)}></input>*/}
+                                    </label>
+                                    <hr />
+                                    <button type="submit" className="btn btn-outline-success btn-sm" id="buttonSendUsear" onClick={() => upsertUser(user)}>Send</button>
+                                    <hr />
+                                </form>
+                                {/*Form resgister User-----------------------------------------------------------------------------------------------------------------------------------------*/}
+                                {/*Table Users------------------------------------------------------------------------------------------------------------------------------*/}
+                                <div className="container text-center">
+                                    <div className="row">
+                                        {/*<div className="col">ID</div>*/}
+                                        <div className="col">User name</div>
+                                        <div className="col">Pasword</div>
+                                        <div className="col">Is admin</div>
+                                        <div className="col">Station</div>
+                                        <div className="col">Update</div>
+                                    </div>
+                                </div>
+                                <div className="container text-center">
+                                    {bringTableUsr.map((f) => (
+                                        <div key={f.id} className="row">
+                                            {/*<div className="col">{e.id}</div>*/}
+                                            <div className="col">{f.userName}</div>
+                                            <div className="col">{f.password}</div>
+                                            <div className="col">{f.is_admin.toString()}</div>
+                                            <div className="col">{namesFiltere(f.FK_station)}</div>
+                                            <div className="col">
+                                                <button type="submit" className="btn btn-sm btn-outline-warning" id="buttonUpdateUser" onClick={() => setUser(f)}>Edit</button>
+                                                <button type="submit" className="btn btn-sm btn-outline-danger" id="buttonUpdateUser" onClick={() => deleteUser(f)}>Delete</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                {/*Table Users------------------------------------------------------------------------------------------------------------------------------*/}
+                            </div>
                         </div>
                     </div>
-                ))}
+                </div>
+                {/**visual section and tes---------------------------- */}
             </div>
-            {/*Table Users------------------------------------------------------------------------------------------------------------------------------*/}
-            <hr />
-            <hr />
-            {/*Form resgister User-----------------------------------------------------------------------------------------------------------------------------------------*/}
-            <form method='post' onSubmit={handleSubmit}>
-                <label htmlFor={userInputNmae}>
-                    User name:
-                    <input id={userInputNmae} name="userName" type="text" placeholder="Write user's name" value={user.userName} onChange={e => setUserParam("userName", e.target.value)}></input>
-                </label>
-                <hr />
-                <label htmlFor={userInputPassword}>
-                    Pasword:
-                    <input id={userInputPassword} name="userPasword" type="password" value={user.password} onChange={e => setUserParam("password", e.target.value)}></input>
-                </label>
-                <hr />
-                <label htmlFor={userInputFalseAdmin}>
-                    Is admin:
-                    <input id="falseId" name="adminBoolean" type="radio" value={user.is_admin} onChange={e => setUserParam("is_admin", (e.target.value = true))}></input>
-                    <label htmlFor="falseId">True</label><br></br>
-                    <input id="trueId" name="adminBoolean" type="radio" value={user.is_admin} onChange={e => setUserParam("is_admin", (e.target.value = false))}></input>
-                    <label htmlFor="trueId">False</label><br></br>
-                </label>
-                <hr />
-                <label htmlFor={userInputStation}>
-                    Station director:
-                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" onChange={e => { handleChange; setUserParam("FK_station", convert(e.target.value).id) }}>
-                        <option>Select a station</option>
-                        {bringTableStt.map((e) => {
-                            return <option key={e.id} value={JSON.stringify(e)}>{e.name}</option>
-                        })
-                        }
-                        {/*setUserParam("FK_station", convert(selectedOption).id)*/}
-                    </select>
-                    {/*<input id={userInputStation} name="stationDirector" type="text" value={user.FK_station} onChange={e => setUserParam("FK_station", e.target.value)}></input>*/}
-                </label>
-                <hr />
-                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendUsear" onClick={() => upsertUser(user)}>Send</button>
-                <hr />
-                <hr />
-            </form>
-            {/*Form resgister User-----------------------------------------------------------------------------------------------------------------------------------------*/}
         </>
     );
 

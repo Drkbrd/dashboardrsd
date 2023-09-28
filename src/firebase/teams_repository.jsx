@@ -125,7 +125,7 @@ export async function getAsyncStation(setStation) {
         setStation(newData)
     });
 }
-//Update team  
+//Update station  
 export async function updateStation(station) {
     try {
         const userRef = doc(db, "station", station.id);
@@ -134,7 +134,7 @@ export async function updateStation(station) {
         console.error("Error adding station: ", e);
     }
 }
-//Delete team
+//Delete station
 export async function deleteStation(station) {
     try {
         await deleteDoc(doc(db, "station", station.id));
@@ -196,17 +196,13 @@ export async function deleteUser(user) {
 }
 //CRUD User-------------------------------------------------------------------------------------------------------
 
-/*Registrar escore del team
-export async function asignPoints(fkst, fkteam, timestam, totScore) {
+//CRUD Asign points-------------------------------------------------------------------------------------------------------
+//Registrar escore del team
+export async function asignPoints(scores) {
     try {
-        const docRef = await addDoc(collection(db, "score"), {
-            FK_station_score: fkst,
-            FK_team: fkteam,
-            creted_at: timestam,
-            score: totScore
-        });
-        console.log("the id for this item is ", docRef.id);
+        const docRef = await addDoc(collection(db, "score"), scores);
+        console.log("the id for this score is ", docRef.id);
     } catch (e) {
-        console.error("Error adding document: ", e);
+        console.error("Error adding score: ", e);
     }
-}*/
+}

@@ -1,18 +1,24 @@
 import { useEffect, useId, useState } from 'react'
-import { getAllTeams, getAsyncTeams, getAsyncStation, updateTeam, createTeam } from '../firebase/teams_repository'
+import { getAllTeams, getAsyncTeams, getAsyncStation, updateTeam, asignPoints } from '../firebase/teams_repository'
 import './style.css'
+import { connectFirestoreEmulator } from 'firebase/firestore';
 
 
 
 
 function Score() {
 
+    function convert(obj) {
+        return JSON.parse(obj)
+    };
+
     //Add date___________________________________________________________________________________________________________________________
     function getCurrentDateAndTime() {
         const dateTime = new Date();
-        return dateTime.toLocaleString();
+        return dateTime;
     };
     const dateDisplay = getCurrentDateAndTime();
+    //console.log(dateDisplay)
     const dater = new Date(dateDisplay);
     //Add date___________________________________________________________________________________________________________________________
 
@@ -29,78 +35,88 @@ function Score() {
         //console.log(formJson + "handleSubmit here");
     }
 
-    function convert(obj) {
-        return JSON.parse(obj)
-    };
+
     //Block Update___________________________________________________________________________________________________________________________
 
 
 
     //Bring Station info___________________________________________________________________________________________________________________________
     const [station, setTableStt] = useState([])
+    const [selectedOptionStt, setSelectedOptionStt] = useState("{}")
+    const challengeInputId = useId();
+
+    var handleChangeStt = (ed) => {
+        //console.log(ed + "entreaqupi");
+        setSelectedOptionStt(ed.currentTarget.value);
+    };
 
     function stationFilterDescription(stationTable) {
         var conector = bringTableStt.filter((e) => e.id === stationTable);
         var descrReturn = conector.map((e) => e.description);
-        return descrReturn,
-            console.log(descrReturn + "stationFilterDescription");
+        return descrReturn
+        //console.log(descrReturn + "stationFilterDescription");
     }
     function stationFilterName(stationTable) {
         var conector = bringTableStt.filter((e) => e.id === stationTable);
         var nameReturn = conector.map((e) => e.name);
-        return nameReturn,
-            console.log(nameReturn + "stationFilterName");
+        return nameReturn
+        //console.log(nameReturn + "stationFilterName");
     }
     //Bring Station info___________________________________________________________________________________________________________________________
-
     //Bring Team's info___________________________________________________________________________________________________________________________
-    /*Codigo anterior 
-    const [teams, setTeams] = useState([])
     const chantInputId = useId();
-    const challengeInputId = useId();
-    const [sendFkSttScor, setFkSttScor] = useState(0); //sendScore nombre variable - setScore nopmbre funcion - actualizador useState es funcioninterna predefinida
-
-    const [sendIdTeam, setIdTeam] = useState("");
-    const [sendDate, setDate] = useState("");
-    const [sendScoreChn, setScoreChn] = useState(0);
-    const [sendScoreCha, setScoreCha] = useState(0);
-    var totalScore = parseInt(sendScoreChn) + parseInt(sendScoreCha)
     const [selectedOption, setSelectedOption] = useState("{}");
-    */
-
-    const [selectedOption, setSelectedOption] = useState("{}");
-
     const [teams, setTeams] = useState([])
 
 
-    var handleChange = (selectedOption) => {
-        //console.log(selectedOption.currentTarget.value);
-        setSelectedOption(selectedOption.currentTarget.value);
+
+    var handleChange = (paramT) => {
+        //console.log(paramT + "Entre a paramT");
+        setSelectedOption(paramT.currentTarget.value);
     };
 
     //Create Station why? No estoy creadno nuevo
-    /*
-    function setTeamParam(key, value) {
-        var newTeam = {};
-        Object.assign(newTeam, team);
-        newTeam[key] = value;
-        setTeam(newTeam);
-        console.log(newTeam)
-    }*/
-
-    //update Team
-    async function upsertTeam(team) {
-        await updateTeam(team)
-        setTeam({ "name": "", "score": 0 }) //esto se la puiedo enviar a las dos
-
+    function setScoreParam(key, value) {
+        var newScore = {};
+        Object.assign(newScore, score);
+        newScore[key] = value;
+        setScore(newScore);
+        //console.log(newScore)
     }
 
-    //Traer tabla teams y eiditar_________________________________________________________________________________________________________________
 
+    //Traer tabla teams y eiditar_________________________________________________________________________________________________________________
     const [bringTeam, setTeam] = useState({});
     useEffect(() => { getAsyncStation(setTableStt) }, [])
     useEffect(() => { getAsyncTeams(setTeams) }, [])
     //Traer tabla teams y eiditar_________________________________________________________________________________________________________________
+
+    //Create scores_______________________________________________________________________________________________________________________________
+    //Codigo anterior 
+
+    //
+    //
+    //const [sendFkSttScor, setFkSttScor] = useState(0); //sendScore nombre variable - setScore nopmbre funcion - actualizador useState es funcioninterna predefinida
+    //const [sendIdTeam, setIdTeam] = useState("");
+    //const [sendDate, setDate] = useState("");
+
+    const [sendScoreChn, setScoreChn] = useState(0);
+    const [sendScoreCha, setScoreCha] = useState(0);
+    var totalScore = parseInt(sendScoreChn) + parseInt(sendScoreCha)
+    //console.log(totalScore)
+    //const [selectedOption, setSelectedOption] = useState("{}");
+    const [score, setScore] = useState([])
+
+
+    async function upsertScore(score) {
+        score["created_at"] = dater
+        score["score"] = totalScore
+        await asignPoints(score)
+        // setScore({ "created_at": dater.toString() })
+        //setScoreParam("score", totalScore) 
+
+    }
+    //Create scores_______________________________________________________________________________________________________________________________
 
     return (
         <>
@@ -114,8 +130,8 @@ function Score() {
                             {/*Here to selct Station----------------------------------------------------------------------------------------------------------------------*/}
                             <div className="row align-items-center">
                                 <div className="row">
-                                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idStationSelect" onChange={handleChange}>
-                                        <option defaultValue>Select a team</option>
+                                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idStationSelect" onChange={(e) => { handleChangeStt; setSelectedOptionStt(e.target.value); setScoreParam("fk_station", convert(e.target.value).id) }}>
+                                        <option defaultValue>Select a Station</option>
                                         {station.map((station) => {
                                             return <option key={station.id} value={JSON.stringify(station)} > {station.name}</option>
                                         })
@@ -127,10 +143,11 @@ function Score() {
                         <div className="container; align-items-center">
                             <div className="row">
                                 <div className="col">
-                                    <p>{convert(selectedOption).name}</p>
+                                    <p>{/*console.log(selectedOptionStt) + "aquí que imprima la codigo"*/}</p>
+                                    <p>{convert(selectedOptionStt).name}</p>
                                 </div>
                                 <div className="col">
-                                    <p>{convert(selectedOption).description}</p>
+                                    <p>{convert(selectedOptionStt).description}</p>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +159,7 @@ function Score() {
                                     Team:
                                 </div>
                                 <div className="col">
-                                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" onChange={(e) => { handleChange; setTeamParam("created_at", dateDisplay); setSelectedOption(e.target.value).id }}>
+                                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" onChange={(e) => { handleChange; setSelectedOption(e.target.value); setScoreParam("fk_team", convert(e.target.value).id) }}>
                                         <option defaultValue>Select a team</option>
                                         {teams.map((team) => {
                                             return <option key={team.id} value={JSON.stringify(team)}>{team.name}</option>
@@ -158,32 +175,32 @@ function Score() {
                                     </div>
                                 </div>
                             </div>
+                            {/*Here to selct Team----------------------------------------------------------------------------------------------------------------------*/}
+                            {/*Here to selct Create Points----------------------------------------------------------------------------------------------------------------------*/}
                             <div className="p-2 g-col-6"></div>
                             <div className="text-bg-secondary p-3">
                                 <div className="row align-items-center">
                                     <div className="col"></div>
-
                                     <div className="col">
                                         <div className="row mb-3">
                                             <div className="col-sm-10; align-self-center; input-group">
                                                 <span className="input-group-text">Chant points&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                                {/*<input id={chantInputId} value={sendScoreChn} onChange={e => setScoreChn(e.target.value)} ></input>¨*/}
+                                                <input type="number" id={chantInputId} value={sendScoreChn} onChange={e => setScoreChn(e.target.value)} ></input>
                                             </div>
                                         </div>
                                         <div className="row mb-3 ">
                                             <div className="col-sm-10; align-self-center; input-group">
                                                 <span className="input-group-text">Challenge points</span>
-                                                {/*<input id={challengeInputId} value={sendScoreCha} onChange={e => setScoreCha(e.target.value)}></input>*/}
+                                                <input type="number" id={challengeInputId} value={sendScoreCha} onChange={e => setScoreCha(e.target.value)}></input>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col">{/*console.log(convert(selectedOption).id + " esta es la id y la fecha " + dateDisplay)*/}</div>
+                                    <div className="col"></div>
                                 </div>
                             </div>
-                            {/*Here to selct Team----------------------------------------------------------------------------------------------------------------------*/}
                             <div className="p-2 g-col-6"></div>
                             <div className="p-2 g-col-6">
-                                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onClick={() => upsertStation(team)}>Send</button>
+                                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onClick={e => upsertScore(score)}>Send</button>
                             </div>
                         </div>
 
@@ -193,7 +210,7 @@ function Score() {
         </>
     )
 
-
+    // onChange={console.log(setScoreParam("score", parseInt(sendScoreCha) + parseInt(sendScoreChn)))}
 }
 
 export default Score
