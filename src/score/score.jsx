@@ -26,7 +26,7 @@ function Score() {
         // O puedes trabajarlo como un objeto plano:
         const formJson = Object.fromEntries(formData.entries());
         e(selectedOption.currentTarget.value);
-        console.log(formJson + "handleSubmit here");
+        //console.log(formJson + "handleSubmit here");
     }
 
     function convert(obj) {
@@ -73,7 +73,7 @@ function Score() {
 
 
     var handleChange = (selectedOption) => {
-        console.log(selectedOption.currentTarget.value);
+        //console.log(selectedOption.currentTarget.value);
         setSelectedOption(selectedOption.currentTarget.value);
     };
 
@@ -182,7 +182,7 @@ function Score() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col">{console.log(convert(selectedOption).id + " esta es la id y la fecha " + dateDisplay)}</div>
+                                    <div className="col">{/*console.log(convert(selectedOption).id + " esta es la id y la fecha " + dateDisplay)*/}</div>
                                 </div>
                             </div>
                             {/*Here to selct Team----------------------------------------------------------------------------------------------------------------------*/}

@@ -1,5 +1,5 @@
 import { db } from './firebase_config'
-import { collection, getDocs, query, onSnapshot, addDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, query, onSnapshot, addDoc, doc, updateDoc, deleteDoc, where } from "firebase/firestore";
 
 
 //CRUD Team-------------------------------------------------------------------------------------------------------
@@ -18,10 +18,24 @@ export async function getAllTeams(setTeams) {
 //Get all the teams - reactivo y cambia automatico
 export async function getAsyncTeams(setTeams) {
     const q = await query(collection(db, "team"));
+    const scores = await getAllScore();
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const newData = querySnapshot.docs
             .map((doc) => ({ ...doc.data(), id: doc.id }));
+        newData.forEach((team) => team.score = scores.filter((score) => score["fk_team"] == team.id).reduce((accumulator, score) => accumulator + score.score, 0))
         setTeams(newData)
+    });
+}
+
+export async function getAsyncScore(setTeams) {
+    const q = await query(collection(db, "score"));
+    var teams = []
+    await getAllTeams((t) => teams = t);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const scores = querySnapshot.docs
+            .map((doc) => ({ ...doc.data(), id: doc.id }));
+        teams.forEach((team) => team.score = scores.filter((score) => score["fk_team"] == team.id).reduce((accumulator, score) => accumulator + score.score, 0))
+        setTeams(teams)
     });
 }
 
@@ -51,6 +65,33 @@ export async function deleteTeam(team) {
         console.error("Error deleting team: ", e);
     }
 }
+//get score by id
+export async function getScoreById(team) {
+    console.log("Hola entre a getScoreById")
+    const q = query(collection(db, "score"), where("fk_team", "==", team.id));
+    const querySnapshot = await getDocs(q);
+    var totalScore = 0
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data().score);
+        totalScore += parseInt(doc.data().score);
+    });
+    console.log(totalScore + "aqui es ta el numevo total")
+    return totalScore;
+}
+
+//get all scores
+export async function getAllScore() {
+    const querySnapshot = await getDocs(collection(db, "score"));
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+    });
+    const newData = querySnapshot.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }));
+    return newData;
+}
+
 //CRUD Team-------------------------------------------------------------------------------------------------------
 
 //CRUD Station-------------------------------------------------------------------------------------------------------
@@ -135,10 +176,11 @@ export async function getAsyncUser(setUser) {
         setUser(newData)
     });
 }
-//Update team
+//Update user
 export async function updateUser(user) {
     try {
         const userRef = doc(db, "user", user.id);
+        delete user["id"]
         await updateDoc(userRef, user);
     } catch (e) {
         console.error("Error adding user: ", e);

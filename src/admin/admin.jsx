@@ -77,10 +77,10 @@ function AdminControl() {
     const userInputFalseAdmin = useId();
     const userInputStation = useId();
     const [selectedOption, setSelectedOption] = useState("{}");
-    var conector = "";
+    //var conector = "";
 
     var handleChange = (selectedOption) => {
-        console.log(selectedOption.currentTarget.value.id);
+        //console.log(selectedOption.currentTarget.value.id);
         setSelectedOption(selectedOption.currentTarget.value.id);
     };
     //const idTeamToUser = convert(selectedOption).id;
@@ -92,7 +92,7 @@ function AdminControl() {
         Object.assign(newUser, user);
         newUser[key] = value;
         setUser(newUser);
-        console.log(newUser)
+        //console.log(newUser)
     }
     //update User
     async function upsertUser(user) {
@@ -108,8 +108,7 @@ function AdminControl() {
     function namesFiltere(stationTable) {
         var conector = bringTableStt.filter((e) => e.id === stationTable);
         var nameReturn = conector.map((e) => e.name);
-        return nameReturn,
-            console.log(nameReturn);
+        return nameReturn
     }
 
     //Traer tabla user y eitar
@@ -131,7 +130,7 @@ function AdminControl() {
         Object.assign(newStation, station);
         newStation[key] = value;
         setStation(newStation);
-        console.log(newStation)
+        //console.log(newStation)
     }
     //update Station
     async function upsertStation(station) {
@@ -310,14 +309,12 @@ function AdminControl() {
                 <label htmlFor={userInputStation}>
                     Station director:
                     <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" onChange={e => { handleChange; setUserParam("FK_station", convert(e.target.value).id) }}>
-                        <option defaultValue>Select a station</option>
+                        <option>Select a station</option>
                         {bringTableStt.map((e) => {
                             return <option key={e.id} value={JSON.stringify(e)}>{e.name}</option>
                         })
-
                         }
-                        {/*setUserParam("FK_station", convert(selectedOption).id)
-                        */}
+                        {/*setUserParam("FK_station", convert(selectedOption).id)*/}
                     </select>
                     {/*<input id={userInputStation} name="stationDirector" type="text" value={user.FK_station} onChange={e => setUserParam("FK_station", e.target.value)}></input>*/}
                 </label>

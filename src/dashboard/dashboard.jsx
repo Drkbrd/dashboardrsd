@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './style.css'
 import { db, app } from '../firebase/firebase_config.jsx'
 import { create } from './create.jsx'
-import { getAllTeams, getAsyncTeams } from '../firebase/teams_repository'
+import { getAllTeams, getAsyncTeams, getScoreById, getAsyncScore } from '../firebase/teams_repository'
 
 /*
 const listTeams = [
@@ -26,7 +26,7 @@ function Dashboard() {
     const [count, setCount] = useState(1)
     const [teams, setTeams] = useState([])
     //getAllTeams()
-    useEffect(() => { getAsyncTeams(setTeams) }, [])
+    useEffect(() => { getAsyncScore(setTeams) }, [])
     return (
         <>
             <div className="p-3 mb-2 bg-dark text-white; fullBody">
