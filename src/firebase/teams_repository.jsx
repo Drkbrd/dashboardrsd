@@ -8,7 +8,7 @@ export async function getAllTeams(setTeams) {
     const querySnapshot = await getDocs(collection(db, "team"));
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        doc.id, " => ", doc.data();
     });
     const newData = querySnapshot.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -67,13 +67,14 @@ export async function deleteTeam(team) {
 }
 //get score by id
 export async function getScoreById(team) {
-    console.log("Hola entre a getScoreById")
+    //console.log("Hola entre a getScoreById")
     const q = query(collection(db, "score"), where("fk_team", "==", team.id));
     const querySnapshot = await getDocs(q);
     var totalScore = 0
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data().score);
+        //console.log(doc.id, " => ", doc.data().score);
+        doc.id, " => ", doc.data().score
         totalScore += parseInt(doc.data().score);
     });
     console.log(totalScore + "aqui es ta el numevo total")
@@ -85,7 +86,8 @@ export async function getAllScore() {
     const querySnapshot = await getDocs(collection(db, "score"));
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        //console.log(doc.id, " => ", doc.data());
+        doc.id, " => ", doc.data()
     });
     const newData = querySnapshot.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -109,7 +111,8 @@ export async function getAllStation(setStation) {
     const querySnapshot = await getDocs(collection(db, "station"));
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        //console.log(doc.id, " => ", doc.data());
+        doc.id, " => ", doc.data()
     });
     const newData = querySnapshot.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -160,7 +163,8 @@ export async function getAllUsers(setUser) {
     const querySnapshot = await getDocs(collection(db, "user"));
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        //console.log(doc.id, " => ", doc.data());
+        doc.id, " => ", doc.data()
     });
     const newData = querySnapshot.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }));

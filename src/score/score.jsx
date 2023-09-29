@@ -127,50 +127,54 @@ function Score() {
                             <h1 className="textStyle">ROSARISTA'S WEEK</h1>
                         </div>
                         <div className="card-body text-danger; ">
-                            {/*Here to selct Station----------------------------------------------------------------------------------------------------------------------*/}
-                            <div className="row align-items-center">
-                                <div className="row">
-                                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idStationSelect" onChange={(e) => { handleChangeStt; setSelectedOptionStt(e.target.value); setScoreParam("fk_station", convert(e.target.value).id) }}>
-                                        <option defaultValue>Select a Station</option>
-                                        {station.map((station) => {
-                                            return <option key={station.id} value={JSON.stringify(station)} > {station.name}</option>
-                                        })
-                                        }
-                                    </select>
+                            <div className="text-bg-secondary p-3">
+                                {/*Here to selct Station----------------------------------------------------------------------------------------------------------------------*/}
+                                <div className="row align-items-center">
+                                    <div className="row">
+                                        <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idStationSelect" onChange={(e) => { handleChangeStt; setSelectedOptionStt(e.target.value); setScoreParam("fk_station", convert(e.target.value).id) }}>
+                                            <option defaultValue>Select a Station</option>
+                                            {station.map((station) => {
+                                                return <option key={station.id} value={JSON.stringify(station)} > {station.name}</option>
+                                            })
+                                            }
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="container; align-items-center">
-                            <div className="row">
-                                <div className="col">
-                                    <p>{/*console.log(selectedOptionStt) + "aquí que imprima la codigo"*/}</p>
-                                    <p>{convert(selectedOptionStt).name}</p>
-                                </div>
-                                <div className="col">
-                                    <p>{convert(selectedOptionStt).description}</p>
+
+                                <div className="container; align-items-center">
+                                    <div className="row">
+                                        <div className="col">
+                                            <p>{convert(selectedOptionStt).name}</p>
+                                        </div>
+                                        <div className="col">
+                                            <p>{convert(selectedOptionStt).description}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         {/*Here to selct Station----------------------------------------------------------------------------------------------------------------------*/}
                         <div className="card-body text-danger; ">
                             {/*Here to selct team---------------------------------------------------------------------------------------------------------------------- */}
-                            <div className="text-bg-secondary p-3; row align-items-center">
-                                <div className="col; divSizeTeam">
-                                    Team:
-                                </div>
-                                <div className="col">
-                                    <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" onChange={(e) => { handleChange; setSelectedOption(e.target.value); setScoreParam("fk_team", convert(e.target.value).id) }}>
-                                        <option defaultValue>Select a team</option>
-                                        {teams.map((team) => {
-                                            return <option key={team.id} value={JSON.stringify(team)}>{team.name}</option>
-                                        })
-                                        }
-                                    </select>
-                                </div>
-                                <div className="col">
-                                    <div className="card; bg-transparent">
-                                        <div className="card-body; textStyle2">
-                                            <p>{convert(selectedOption).chant}</p>
+                            <div className="text-bg-secondary p-3">
+                                <div className="text-bg-secondary p-3; row align-items-center">
+                                    <div className="col; divSizeTeam">
+                                        Team:
+                                    </div>
+                                    <div className="col">
+                                        <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idTeamSelcted" onChange={(e) => { handleChange; setSelectedOption(e.target.value); setScoreParam("fk_team", convert(e.target.value).id) }}>
+                                            <option defaultValue>Select a team</option>
+                                            {teams.map((team) => {
+                                                return <option key={team.id} value={JSON.stringify(team)}>{team.name}</option>
+                                            })
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className="col">
+                                        <div className="card; bg-transparent">
+                                            <div className="card-body; textStyle2">
+                                                <p>{convert(selectedOption).chant}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -199,8 +203,8 @@ function Score() {
                                 </div>
                             </div>
                             <div className="p-2 g-col-6"></div>
-                            <div className="p-2 g-col-6">
-                                <button type="submit" className="btn btn-outline-primary btn-lg" id="buttonSendScores" onClick={e => upsertScore(score)}>Send</button>
+                            <div className="d-grid gap-2">
+                                <button type="submit" className="btn btn-success btn-lg" id="buttonSendScores" onClick={e => upsertScore(score)}>Send</button>
                             </div>
                         </div>
 

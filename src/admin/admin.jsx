@@ -1,4 +1,5 @@
 import { useId, useState, useEffect } from 'react';
+import './styleadm.css'
 import { createTeam, createStation, createUser, getAsyncTeams, updateTeam, deleteTeam, getAsyncUser, deleteUser, updateUser, updateStation, deleteStation, getAsyncStation, getAllStation } from '../firebase/teams_repository'
 
 function AdminControl() {
@@ -150,22 +151,23 @@ function AdminControl() {
 
     return (
         <>
-            <div class="bg-success p-2 text-white fullbody">
+            <div className="fullBody">
+
                 {/**visual section and tes---------------------------- */}
-                <div class="accordion accordion-flush" id="accordionFlushExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                <div className="accordion accordion-flush" id="accordionFlushExample">
+                    <div className="accordion-item">
+                        <h2 className="accordion-header">
+                            <button className="accordion-button collapsed btn btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                 Team Administration
                             </button>
                         </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
+                        <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div className="accordion-body">
                                 {/*Form resgister team------------------------------------------------------------------------------------------------------------------------------*/}
                                 <form id="allForm" onSubmit={handleSubmit}>
                                     <label htmlFor={colourInputId}>
                                         Team's color:
-                                        <input id={colourInputId} name="colourInputId" type="color" value={team.color} onChange={e => setTeamParam("color", e.target.value)}></input>
+                                        <input id={colourInputId} className="form-control form-control-color" name="colourInputId" type="color" value={team.color} onChange={e => setTeamParam("color", e.target.value)}></input>
                                     </label>
                                     <hr />
                                     <label htmlFor={nameInputId}>
@@ -215,14 +217,14 @@ function AdminControl() {
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    <div className="accordion-item">
+                        <h2 className="accordion-header">
+                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                                 Station administration
                             </button>
                         </h2>
-                        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
+                        <div id="flush-collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div className="accordion-body">
                                 {/*Table Station------------------------------------------------------------------------------------------------------------------------------*/}
                                 {/*Form resgister Station-----------------------------------------------------------------------------------------*/}
                                 <form onSubmit={handleSubmit}>
@@ -279,14 +281,14 @@ function AdminControl() {
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    <div className="accordion-item">
+                        <h2 className="accordion-header">
+                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                                 users administration
                             </button>
                         </h2>
-                        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
+                        <div id="flush-collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div className="accordion-body">
                                 {/*Form resgister User-----------------------------------------------------------------------------------------------------------------------------------------*/}
                                 <form method='post' onSubmit={handleSubmit}>
                                     <label htmlFor={userInputNmae}>
@@ -356,6 +358,7 @@ function AdminControl() {
                     </div>
                 </div>
                 {/**visual section and tes---------------------------- */}
+
             </div>
         </>
     );

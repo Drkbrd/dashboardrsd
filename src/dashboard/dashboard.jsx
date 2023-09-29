@@ -43,12 +43,34 @@ function Dashboard() {
                 <div></div>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="d-grid gap-2 d-md-flex justify-content-md-end"> {/*Ingresar*/}
-                            <button className="btn btn-primary me-md-2" type="button">Logg in</button>
+                        <div className="d-grid gap-2 d-md-flex justify-content-md-end"> {/*Ingresar*/}</div>
+                    </div>
+                    <a className="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                        Link with href
+                    </a>
+                    <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                        <div className="offcanvas-header">
+                            <h5 className="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div className="offcanvas-body">
+                            <div>
+                                Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"></input>
+                                <label htmlFor="floatingInput">Email address</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"></input>
+                                <label htmlFor="floatingPassword">Password</label>
+                            </div>
                         </div>
                     </div>
                 </div >
             </div >
+
+
         </>
     )
 }
