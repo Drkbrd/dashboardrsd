@@ -4,7 +4,7 @@ import Score from '../score/score'
 import Admin from '../admin/admin'
 
 function Home() {
-    const [route, setRoute] = useState('score')
+    const [route, setRoute] = useState('dashboard')
     const routes = {
         dashboard: Dashboard(),
         score: Score(),

@@ -157,11 +157,11 @@ function AdminControl() {
                 <div className="accordion accordion-flush" id="accordionFlushExample">
                     <div className="accordion-item">
                         <h2 className="accordion-header">
-                            <button className="accordion-button collapsed btn btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            <button className="accordion-button collapsed bg-dark-subtle text-emphasis-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                 Team Administration
                             </button>
                         </h2>
-                        <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div id="flush-collapseOne" className="accordion-collapse collapse bg-dark-subtle text-emphasis-dark" data-bs-parent="#accordionFlushExample">
                             <div className="accordion-body">
                                 {/*Form resgister team------------------------------------------------------------------------------------------------------------------------------*/}
                                 <form id="allForm" onSubmit={handleSubmit}>

@@ -30,8 +30,7 @@ function Dashboard() {
     return (
         <>
             <div className="p-3 mb-2 bg-dark text-white; fullBody">
-                <h1 className="textStyle">Dashboard</h1>
-                <p className="textStyle2">Here you  will see the podioum of your Brotherhood</p>
+                <h1 className="textStyle">Rosarist's week podioum</h1>
                 <div className="container text-center">
                     {teams.sort((a, b) => b.score - a.score).map((team) => (
                         <div key={team.id} className="row" style={{ backgroundColor: team.color }}>
@@ -46,16 +45,16 @@ function Dashboard() {
                         <div className="d-grid gap-2 d-md-flex justify-content-md-end"> {/*Ingresar*/}</div>
                     </div>
                     <a className="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                        Link with href
+                        Login
                     </a>
-                    <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                    <div className="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                         <div className="offcanvas-header">
-                            <h5 className="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+                            <h5 className="offcanvas-title" id="offcanvasExampleLabel">Register scores</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div className="offcanvas-body">
                             <div>
-                                Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+                                Use the password given by Technology Area.
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"></input>
