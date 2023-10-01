@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from 'react'
-import { getAllTeams, getAsyncTeams, getAsyncStation, updateTeam, asignPoints } from '../firebase/teams_repository'
+import { getAllTeams, getAsyncTeams, getAsyncStation, getStationFiltered, asignPoints, getAsyncUser } from '../firebase/teams_repository'
 import './style.css'
 import { connectFirestoreEmulator } from 'firebase/firestore';
 
@@ -38,7 +38,13 @@ function Score() {
 
     //Block Update___________________________________________________________________________________________________________________________
 
-
+    //Bring User info___________________________________________________________________________________________________________________________
+    const [user, setTableUser] = useState([])
+    const [selectedOptionUser, setSelectedOptionUser] = useState("{}")
+    var handleChangeUsr = (ed) => {
+        setSelectedOptionStt(ed.currentTarget.value);
+    };
+    //Bring user info___________________________________________________________________________________________________________________________
 
     //Bring Station info___________________________________________________________________________________________________________________________
     const [station, setTableStt] = useState([])
@@ -89,6 +95,8 @@ function Score() {
     const [bringTeam, setTeam] = useState({});
     useEffect(() => { getAsyncStation(setTableStt) }, [])
     useEffect(() => { getAsyncTeams(setTeams) }, [])
+    useEffect(() => { getAsyncUser(setTableUser) }, [])
+    useEffect(() => { getStationFiltered(selectedOptionUser) }, [])
     //Traer tabla teams y eiditar_________________________________________________________________________________________________________________
 
     //Create scores_______________________________________________________________________________________________________________________________
@@ -126,6 +134,20 @@ function Score() {
                         <div className="card-header">
                             <h1 className="textStyle">ROSARISTA'S WEEK</h1>
                         </div>
+                        <div>
+                            {/*Here to Call the user----------------------------------------------------------------------------------------------------------------------*/}
+                            <div className="row">
+                                <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idUserSelct" onChange={(e) => { handleChangeUsr; setSelectedOptionUser(e.target.value), convert(selectedOptionUser).id }}>
+                                    <option defaultValue>Select a user</option>
+                                    {user.map((e) => {
+                                        return <option key={e.id} value={JSON.stringify(e)} > {e.userName}</option>
+                                    })
+                                    }
+                                </select>
+                                {/*console.log(convert(selectedOptionUser).FK_station)*/}
+                            </div>
+                            {/*Here to Call the user----------------------------------------------------------------------------------------------------------------------*/}
+                        </div>
                         <div className="card-body text-danger; ">
                             <div className="text-bg-secondary p-3">
                                 {/*Here to selct Station----------------------------------------------------------------------------------------------------------------------*/}
@@ -143,10 +165,7 @@ function Score() {
 
                                 <div className="container; align-items-center">
                                     <div className="row">
-                                        <div className="col">
-                                            <p>{convert(selectedOptionStt).name}</p>
-                                        </div>
-                                        <div className="col">
+                                        <div className="col; align-items-center">
                                             <p>{convert(selectedOptionStt).description}</p>
                                         </div>
                                     </div>

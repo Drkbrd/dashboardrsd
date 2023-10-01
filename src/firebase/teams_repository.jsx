@@ -119,6 +119,18 @@ export async function getAllStation(setStation) {
     setStation(newData)
 }
 
+//Get all the stations filtered 
+export async function getStationFiltered(fkstt) {
+    const q = query(collection(db, "station"), where("id", "==", fkstt));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        doc.id, " => ", doc.data()
+    });
+}
+
+
 //Get all the station - reactivo y cambia automatico 
 export async function getAsyncStation(setStation) {
     const q = await query(collection(db, "station"));
