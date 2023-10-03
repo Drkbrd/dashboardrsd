@@ -68,6 +68,10 @@ function Dashboard(setUser) {
                         </div>
                     ))}
                 </div>
+
+                <a className="btn btn-primary" role="button" onClick={e => getAsyncScore(setTeams)}>
+                    Refresh
+                </a>
                 <div></div>
                 <div className="container-fluid">
                     <div className="row">
@@ -96,6 +100,7 @@ function Dashboard(setUser) {
                                 <a className="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" onClick={e => compareUser(sendUser, sendPassw)}>
                                     ok
                                 </a>
+
                             </div>
                         </div>
                     </div>

@@ -9,7 +9,7 @@ function Home() {
     const [user, setUser] = useState(null)
     const routes = {
         dashboard: Dashboard(setUser),
-        score: Score(logOut),
+        score: Score(logOut, JSON.stringify(user)),
         admin: Admin()
     }
 
