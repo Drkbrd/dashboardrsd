@@ -1,8 +1,7 @@
-import { useEffect, useState, callBack, useId } from 'react'
-import './style.css'
+import { useEffect, useId, useState } from 'react'
+import { getAllUsers, getAsyncScore } from '../firebase/teams_repository'
 import { } from '../home/home.jsx'
-import { create } from './create.jsx'
-import { getAllTeams, getAsyncTeams, getScoreById, getAsyncScore, getAllUsers } from '../firebase/teams_repository'
+import './style.css'
 
 /*
 const listTeams = [
@@ -59,27 +58,34 @@ function Dashboard(setUser) {
     return (
         <>
             <div className="p-3 mb-2 bg-dark text-white; fullBody">
-                <h1 className="textStyle">Rosarist's week podioum</h1>
-                <div className="container text-center">
+                <h1 className="textStyle mb-4">Rosarist's week podioum</h1>
+                <div className="container text-center mw-100 mh-100">
                     {teams.sort((a, b) => b.score - a.score).map((team) => (
-                        <div key={team.id} className="row" style={{ backgroundColor: team.color }}>
+                        <div key={team.id} className="mh-100" style={{ backgroundColor: team.color }}>
                             <div className="col">{team.name}</div>
                             <div className="col">{team.score}</div>
                         </div>
                     ))}
                 </div>
-
-                <a className="btn btn-primary" role="button" onClick={e => getAsyncScore(setTeams)}>
-                    Refresh
-                </a>
+                <div className='row mt-4'>
+                    <div class="col-md-12 text-center">
+                        <a className="btn btn-info" role="button" onClick={e => getAsyncScore(setTeams)}>
+                            Refresh
+                        </a>
+                    </div>
+                </div>
                 <div></div>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="d-grid gap-2 d-md-flex justify-content-md-end"> {/*Ingresar*/}</div>
                     </div>
-                    <a className="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                        Login
-                    </a>
+                    <div className='row mt-4'>
+                        <div class="col-md-12 text-center">
+                            <a className="btn btn-success" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                Login
+                            </a>
+                        </div>
+                    </div>
                     <div className="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasExampleLabel">Register scores</h5>
