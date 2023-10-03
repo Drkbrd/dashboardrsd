@@ -6,7 +6,7 @@ import { connectFirestoreEmulator } from 'firebase/firestore';
 
 
 
-function Score() {
+function Score(logOut) {
 
     function convert(obj) {
         return JSON.parse(obj)
@@ -42,7 +42,7 @@ function Score() {
     const [user, setTableUser] = useState([])
     const [selectedOptionUser, setSelectedOptionUser] = useState("{}")
     var handleChangeUsr = (ed) => {
-        setSelectedOptionStt(ed.currentTarget.value);
+        setSelectedOptionUser(ed.currentTarget.value);
     };
     //Bring user info___________________________________________________________________________________________________________________________
 
@@ -137,7 +137,7 @@ function Score() {
                         <div>
                             {/*Here to Call the user----------------------------------------------------------------------------------------------------------------------*/}
                             <div className="row">
-                                <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idUserSelct" onChange={(e) => { handleChangeUsr; setSelectedOptionUser(e.target.value), convert(selectedOptionUser).id }}>
+                                <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idUserSelct" onChange={(e) => { handleChangeUsr; setSelectedOptionUser(e.target.value); setScoreParam("fk_user", convert(selectedOptionUser).id) }}>
                                     <option defaultValue>Select a user</option>
                                     {user.map((e) => {
                                         return <option key={e.id} value={JSON.stringify(e)} > {e.userName}</option>
@@ -226,9 +226,11 @@ function Score() {
                                 <button type="submit" className="btn btn-success btn-lg" id="buttonSendScores" onClick={e => upsertScore(score)}>Send</button>
                             </div>
                         </div>
-
                     </div>
                 </div >
+                <div className="d-grid gap-2">
+                    <button type="submit" className="btn btn-success btn-lg" id="loggout" onClick={e => logOut()}>Logout</button>
+                </div>
             </form >
         </>
     )

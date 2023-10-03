@@ -3,11 +3,13 @@ import Dashboard from '../dashboard/dashboard'
 import Score from '../score/score'
 import Admin from '../admin/admin'
 
+
 function Home() {
     const [route, setRoute] = useState('dashboard')
+    const [user, setUser] = useState(null)
     const routes = {
-        dashboard: Dashboard(),
-        score: Score(),
+        dashboard: Dashboard(setUser),
+        score: Score(logOut),
         admin: Admin()
     }
 
@@ -16,6 +18,12 @@ function Home() {
         //console.log(e.target.name)
         setRoute(e.target.name)
     }
+
+    function logOut() {
+        setRoute('dashboard')
+        setUser(null)
+    }
+
     return (
         <>
 
@@ -26,7 +34,7 @@ function Home() {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav">
+                        {user && user.is_admin && (<ul className="navbar-nav">
                             <li className="nav-item">
                                 <a className="nav-link" name="dashboard" onClick={handleClick}>Dashboard</a>
                             </li>
@@ -36,14 +44,21 @@ function Home() {
                             <li className="nav-item">
                                 <a className="nav-link" name="admin" onClick={handleClick}>Admin</a>
                             </li>
-                        </ul>
+                        </ul>)}
+                        {user && !user.is_admin && (<ul className="navbar-nav">
+                            <li className="nav-item">
+                                <a className="nav-link" name="dashboard" onClick={handleClick}>Dashboard</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" name="score" onClick={handleClick}>Score</a>
+                            </li>
+                        </ul>)}
                     </div>
                 </div>
             </nav >
             <div>
                 {routes[route]}
             </div>
-
         </>
     )
 }

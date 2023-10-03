@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, callBack, useId } from 'react'
 import './style.css'
-import { db, app } from '../firebase/firebase_config.jsx'
+import { } from '../home/home.jsx'
 import { create } from './create.jsx'
-import { getAllTeams, getAsyncTeams, getScoreById, getAsyncScore } from '../firebase/teams_repository'
+import { getAllTeams, getAsyncTeams, getScoreById, getAsyncScore, getAllUsers } from '../firebase/teams_repository'
 
 /*
 const listTeams = [
@@ -22,9 +22,38 @@ const listTeams = [
 
 const sortList = listTeams.sort((a, b) => a.score - b.score)*/
 
-function Dashboard() {
+function Dashboard(setUser) {
     const [count, setCount] = useState(1)
     const [teams, setTeams] = useState([])
+
+    //Bring User info___________________________________________________________________________________________________________________________
+    const userInputId = useId();
+    const passInputId = useId();
+    const [sendUser, setFormUser] = useState([]);
+    const [sendPassw, setPassw] = useState([]);
+    const [user, setTableUser] = useState([]);
+    const [selectedOptionUser, setSelectedOptionUser] = useState("{}")
+
+    function compareUser(sendUser, sendPassw) {
+        var userTbl = user.filter(e => e.userName === sendUser)
+        if (sendUser != userTbl[0]?.userName) {
+            console.log("Incorrect User")
+            return
+        }
+        if (sendPassw != userTbl[0]?.password) {
+            console.log("Incorrect Password")
+            return
+        }
+        setUser(userTbl[0])
+    }
+
+
+    var handleChangeUsr = (ed) => {
+        setSelectedOptionUser(ed.currentTarget.value);
+    };
+    useEffect(() => { getAllUsers(setTableUser) }, [])
+    //Bring User info___________________________________________________________________________________________________________________________
+
     //getAllTeams()
     useEffect(() => { getAsyncScore(setTeams) }, [])
     return (
@@ -50,19 +79,23 @@ function Dashboard() {
                     <div className="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasExampleLabel">Register scores</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div className="offcanvas-body">
                             <div>
                                 Use the password given by Technology Area.
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"></input>
-                                <label htmlFor="floatingInput">Email address</label>
+                            <div className="form-floating mb-3">
+                                <input type="email" class="form-control" id={userInputId} value={sendUser} onChange={e => setFormUser(e.target.value)}></input>
+                                <label htmlFor={userInputId}>Email address</label>
                             </div>
-                            <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"></input>
-                                <label htmlFor="floatingPassword">Password</label>
+                            <div className="form-floating">
+                                <input type="password" class="form-control" id={passInputId} value={sendPassw} onChange={e => setPassw(e.target.value)}></input>
+                                <label htmlFor={passInputId}>Password</label>
+                                <hr />
+                                <a className="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" onClick={e => compareUser(sendUser, sendPassw)}>
+                                    ok
+                                </a>
                             </div>
                         </div>
                     </div>
