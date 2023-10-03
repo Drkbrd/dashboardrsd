@@ -6,7 +6,7 @@ import { connectFirestoreEmulator } from 'firebase/firestore';
 
 
 
-function Score(logOut) {
+function Score(logOut, currentUser) {
 
     function convert(obj) {
         return JSON.parse(obj)
@@ -26,13 +26,13 @@ function Score(logOut) {
     function handleSubmit(e) {
         // Evita que el navegador actualice la página
         e.preventDefault();
-        // Lee los datos del formulario
+        /* Lee los datos del formulario
         const form = e.target;
         const formData = new FormData(form);
         // O puedes trabajarlo como un objeto plano:
         const formJson = Object.fromEntries(formData.entries());
         e(selectedOption.currentTarget.value);
-        //console.log(formJson + "handleSubmit here");
+        //console.log(formJson + "handleSubmit here");*/
     }
 
 
@@ -119,7 +119,11 @@ function Score(logOut) {
     async function upsertScore(score) {
         score["created_at"] = dater
         score["score"] = totalScore
+        score["fk_user"] = convert(currentUser).id
+        //console.log(convert(currentUser).id)
         await asignPoints(score)
+        setScoreChn(0)
+        setScoreCha(0)
         // setScore({ "created_at": dater.toString() })
         //setScoreParam("score", totalScore) 
 
@@ -135,18 +139,7 @@ function Score(logOut) {
                             <h1 className="textStyle">ROSARISTA'S WEEK</h1>
                         </div>
                         <div>
-                            {/*Here to Call the user----------------------------------------------------------------------------------------------------------------------*/}
-                            <div className="row">
-                                <select className="form-select form-select-sm; bg-transparent" aria-label="Small select example" id="idUserSelct" onChange={(e) => { handleChangeUsr; setSelectedOptionUser(e.target.value); setScoreParam("fk_user", convert(selectedOptionUser).id) }}>
-                                    <option defaultValue>Select a user</option>
-                                    {user.map((e) => {
-                                        return <option key={e.id} value={JSON.stringify(e)} > {e.userName}</option>
-                                    })
-                                    }
-                                </select>
-                                {/*console.log(convert(selectedOptionUser).FK_station)*/}
-                            </div>
-                            {/*Here to Call the user----------------------------------------------------------------------------------------------------------------------*/}
+
                         </div>
                         <div className="card-body text-danger; ">
                             <div className="text-bg-secondary p-3">
