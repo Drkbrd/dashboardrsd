@@ -1,7 +1,6 @@
-import { useEffect, useId, useState } from 'react'
-import { getAllTeams, getAsyncTeams, getAsyncStation, getStationFiltered, asignPoints, getAsyncUser } from '../firebase/teams_repository'
-import './style.css'
-import { connectFirestoreEmulator } from 'firebase/firestore';
+import { useEffect, useId, useState } from 'react';
+import { asignPoints, getAllStation, getAllTeams, getStationFiltered } from '../firebase/teams_repository';
+import './style.css';
 
 
 
@@ -93,9 +92,8 @@ function Score(logOut, currentUser) {
 
     //Traer tabla teams y eiditar_________________________________________________________________________________________________________________
     const [bringTeam, setTeam] = useState({});
-    useEffect(() => { getAsyncStation(setTableStt) }, [])
-    useEffect(() => { getAsyncTeams(setTeams) }, [])
-    useEffect(() => { getAsyncUser(setTableUser) }, [])
+    useEffect(() => { getAllStation(setTableStt) }, [])
+    useEffect(() => { getAllTeams(setTeams) }, [])
     useEffect(() => { getStationFiltered(selectedOptionUser) }, [])
     //Traer tabla teams y eiditar_________________________________________________________________________________________________________________
 
