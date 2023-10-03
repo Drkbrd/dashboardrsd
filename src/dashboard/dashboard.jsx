@@ -59,7 +59,7 @@ function Dashboard(setUser) {
         <>
             <div className="p-3 mb-2 bg-dark text-white; fullBody">
                 <h1 className="textStyle mb-4">Rosarist's week podioum</h1>
-                <div className="container text-center mw-100 mh-100">
+                <div className="container text-center mw-100 mh-100 textStyle3">
                     {teams.sort((a, b) => b.score - a.score).map((team) => (
                         <div key={team.id} className="mh-100; row" style={{ backgroundColor: team.color }}>
                             <div className="col">{team.name}</div>
