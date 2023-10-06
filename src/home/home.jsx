@@ -7,11 +7,6 @@ import Admin from '../admin/admin'
 function Home() {
     const [route, setRoute] = useState('dashboard')
     const [user, setUser] = useState(null)
-    const routes = {
-        dashboard: Dashboard(setUser),
-        score: Score(logOut, JSON.stringify(user)),
-        admin: Admin()
-    }
 
     function handleClick(e) {
         e.preventDefault()
@@ -57,7 +52,6 @@ function Home() {
                 </div>
             </nav >
             <div>
-                {routes[route]}
             </div>
         </>
     )
